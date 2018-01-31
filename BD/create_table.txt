@@ -1,0 +1,104 @@
+/*------------------------------------------------------------
+*        Script SQLSERVER 
+------------------------------------------------------------*/
+
+
+/*------------------------------------------------------------
+-- Table: attack
+------------------------------------------------------------*/
+CREATE TABLE attack(
+	id_attack   INT IDENTITY (1,1) NOT NULL ,
+	data_attack DATETIME  ,
+	id_website  INT   ,
+	id_hacker   INT   ,
+	CONSTRAINT prk_constraint_attack PRIMARY KEY NONCLUSTERED (id_attack)
+);
+
+
+/*------------------------------------------------------------
+-- Table: hacker
+------------------------------------------------------------*/
+CREATE TABLE hacker(
+	id_hacker   INT IDENTITY (1,1) NOT NULL ,
+	name_hacker VARCHAR (50)  ,
+	CONSTRAINT prk_constraint_hacker PRIMARY KEY NONCLUSTERED (id_hacker)
+);
+
+
+/*------------------------------------------------------------
+-- Table: website
+------------------------------------------------------------*/
+CREATE TABLE website(
+	id_website  INT IDENTITY (1,1) NOT NULL ,
+	url_website VARCHAR (50)  ,
+	IP_address  VARCHAR (25)  ,
+	id_country  INT   ,
+	id_company  INT   ,
+	id_server   INT   ,
+	CONSTRAINT prk_constraint_website PRIMARY KEY NONCLUSTERED (id_website)
+);
+
+
+/*------------------------------------------------------------
+-- Table: country
+------------------------------------------------------------*/
+CREATE TABLE country(
+	id_country   INT IDENTITY (1,1) NOT NULL ,
+	name_country VARCHAR (50)  ,
+	CONSTRAINT prk_constraint_country PRIMARY KEY NONCLUSTERED (id_country)
+);
+
+
+/*------------------------------------------------------------
+-- Table: company
+------------------------------------------------------------*/
+CREATE TABLE company(
+	id_company   INT IDENTITY (1,1) NOT NULL ,
+	name_company VARCHAR (50)  ,
+	type_company VARCHAR (50)  ,
+	id_website   INT   ,
+	id_country   INT   ,
+	CONSTRAINT prk_constraint_company PRIMARY KEY NONCLUSTERED (id_company)
+);
+
+
+/*------------------------------------------------------------
+-- Table: server
+------------------------------------------------------------*/
+CREATE TABLE server(
+	id_server   INT IDENTITY (1,1) NOT NULL ,
+	type_server VARCHAR (50)  ,
+	CONSTRAINT prk_constraint_server PRIMARY KEY NONCLUSTERED (id_server)
+);
+
+
+/*------------------------------------------------------------
+-- Table: system
+------------------------------------------------------------*/
+CREATE TABLE system(
+	id_system   INT IDENTITY (1,1) NOT NULL ,
+	type_system VARCHAR (50)  ,
+	CONSTRAINT prk_constraint_system PRIMARY KEY NONCLUSTERED (id_system)
+);
+
+
+/*------------------------------------------------------------
+-- Table: support
+------------------------------------------------------------*/
+CREATE TABLE support(
+	id_website INT  NOT NULL ,
+	id_system  INT  NOT NULL ,
+	CONSTRAINT prk_constraint_support PRIMARY KEY NONCLUSTERED (id_website,id_system)
+);
+
+
+
+ALTER TABLE attack ADD CONSTRAINT FK_attack_id_website FOREIGN KEY (id_website) REFERENCES website(id_website);
+ALTER TABLE attack ADD CONSTRAINT FK_attack_id_hacker FOREIGN KEY (id_hacker) REFERENCES hacker(id_hacker);
+ALTER TABLE website ADD CONSTRAINT FK_website_id_country FOREIGN KEY (id_country) REFERENCES country(id_country);
+ALTER TABLE website ADD CONSTRAINT FK_website_id_company FOREIGN KEY (id_company) REFERENCES company(id_company);
+ALTER TABLE website ADD CONSTRAINT FK_website_id_server FOREIGN KEY (id_server) REFERENCES server(id_server);
+ALTER TABLE company ADD CONSTRAINT FK_company_id_website FOREIGN KEY (id_website) REFERENCES website(id_website);
+ALTER TABLE company ADD CONSTRAINT FK_company_id_country FOREIGN KEY (id_country) REFERENCES country(id_country);
+ALTER TABLE support ADD CONSTRAINT FK_support_id_website FOREIGN KEY (id_website) REFERENCES website(id_website);
+ALTER TABLE support ADD CONSTRAINT FK_support_id_system FOREIGN KEY (id_system) REFERENCES system(id_system);

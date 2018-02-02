@@ -1,104 +1,99 @@
-/*------------------------------------------------------------
-*        Script SQLSERVER 
-------------------------------------------------------------*/
+#------------------------------------------------------------
+#        Script MySQL.
+#------------------------------------------------------------
 
 
-/*------------------------------------------------------------
--- Table: attack
-------------------------------------------------------------*/
+#------------------------------------------------------------
+# Table: attack
+#------------------------------------------------------------
+
 CREATE TABLE attack(
-	id_attack   INT IDENTITY (1,1) NOT NULL ,
-	data_attack DATETIME  ,
-	id_website  INT   ,
-	id_hacker   INT   ,
-	CONSTRAINT prk_constraint_attack PRIMARY KEY NONCLUSTERED (id_attack)
-);
+        id_attack   int (11) Auto_increment  NOT NULL ,
+        date_attack Date ,
+        id_website  Int ,
+        id_hacker   Int ,
+        PRIMARY KEY (id_attack )
+)ENGINE=InnoDB;
 
 
-/*------------------------------------------------------------
--- Table: hacker
-------------------------------------------------------------*/
+#------------------------------------------------------------
+# Table: hacker
+#------------------------------------------------------------
+
 CREATE TABLE hacker(
-	id_hacker   INT IDENTITY (1,1) NOT NULL ,
-	name_hacker VARCHAR (50)  ,
-	CONSTRAINT prk_constraint_hacker PRIMARY KEY NONCLUSTERED (id_hacker)
-);
+        id_hacker   int (11) Auto_increment  NOT NULL ,
+        name_hacker Varchar (50) ,
+        PRIMARY KEY (id_hacker )
+)ENGINE=InnoDB;
 
 
-/*------------------------------------------------------------
--- Table: website
-------------------------------------------------------------*/
+#------------------------------------------------------------
+# Table: website
+#------------------------------------------------------------
+
 CREATE TABLE website(
-	id_website  INT IDENTITY (1,1) NOT NULL ,
-	url_website VARCHAR (50)  ,
-	IP_address  VARCHAR (25)  ,
-	id_country  INT   ,
-	id_company  INT   ,
-	id_server   INT   ,
-	CONSTRAINT prk_constraint_website PRIMARY KEY NONCLUSTERED (id_website)
-);
+        id_website  int (11) Auto_increment  NOT NULL ,
+        url_website Varchar (50) ,
+        IP_address  Varchar (25) ,
+        id_country  Int ,
+        id_company  Int ,
+        id_server   Int ,
+        id_system   Int ,
+        PRIMARY KEY (id_website )
+)ENGINE=InnoDB;
 
 
-/*------------------------------------------------------------
--- Table: country
-------------------------------------------------------------*/
+#------------------------------------------------------------
+# Table: country
+#------------------------------------------------------------
+
 CREATE TABLE country(
-	id_country   INT IDENTITY (1,1) NOT NULL ,
-	name_country VARCHAR (50)  ,
-	CONSTRAINT prk_constraint_country PRIMARY KEY NONCLUSTERED (id_country)
-);
+        id_country   int (11) Auto_increment  NOT NULL ,
+        name_country Varchar (50) ,
+        PRIMARY KEY (id_country )
+)ENGINE=InnoDB;
 
 
-/*------------------------------------------------------------
--- Table: company
-------------------------------------------------------------*/
+#------------------------------------------------------------
+# Table: company
+#------------------------------------------------------------
+
 CREATE TABLE company(
-	id_company   INT IDENTITY (1,1) NOT NULL ,
-	name_company VARCHAR (50)  ,
-	type_company VARCHAR (50)  ,
-	id_website   INT   ,
-	id_country   INT   ,
-	CONSTRAINT prk_constraint_company PRIMARY KEY NONCLUSTERED (id_company)
-);
+        id_company   int (11) Auto_increment  NOT NULL ,
+        name_company Varchar (50) ,
+        type_company Varchar (50) ,
+        id_website   Int ,
+        id_country   Int ,
+        PRIMARY KEY (id_company )
+)ENGINE=InnoDB;
 
 
-/*------------------------------------------------------------
--- Table: server
-------------------------------------------------------------*/
+#------------------------------------------------------------
+# Table: server
+#------------------------------------------------------------
+
 CREATE TABLE server(
-	id_server   INT IDENTITY (1,1) NOT NULL ,
-	type_server VARCHAR (50)  ,
-	CONSTRAINT prk_constraint_server PRIMARY KEY NONCLUSTERED (id_server)
-);
+        id_server   int (11) Auto_increment  NOT NULL ,
+        type_server Varchar (50) ,
+        PRIMARY KEY (id_server )
+)ENGINE=InnoDB;
 
 
-/*------------------------------------------------------------
--- Table: system
-------------------------------------------------------------*/
+#------------------------------------------------------------
+# Table: system
+#------------------------------------------------------------
+
 CREATE TABLE system(
-	id_system   INT IDENTITY (1,1) NOT NULL ,
-	type_system VARCHAR (50)  ,
-	CONSTRAINT prk_constraint_system PRIMARY KEY NONCLUSTERED (id_system)
-);
-
-
-/*------------------------------------------------------------
--- Table: support
-------------------------------------------------------------*/
-CREATE TABLE support(
-	id_website INT  NOT NULL ,
-	id_system  INT  NOT NULL ,
-	CONSTRAINT prk_constraint_support PRIMARY KEY NONCLUSTERED (id_website,id_system)
-);
-
-
+        id_system   int (11) Auto_increment  NOT NULL ,
+        type_system Varchar (50) ,
+        PRIMARY KEY (id_system )
+)ENGINE=InnoDB;
 
 ALTER TABLE attack ADD CONSTRAINT FK_attack_id_website FOREIGN KEY (id_website) REFERENCES website(id_website);
 ALTER TABLE attack ADD CONSTRAINT FK_attack_id_hacker FOREIGN KEY (id_hacker) REFERENCES hacker(id_hacker);
 ALTER TABLE website ADD CONSTRAINT FK_website_id_country FOREIGN KEY (id_country) REFERENCES country(id_country);
 ALTER TABLE website ADD CONSTRAINT FK_website_id_company FOREIGN KEY (id_company) REFERENCES company(id_company);
 ALTER TABLE website ADD CONSTRAINT FK_website_id_server FOREIGN KEY (id_server) REFERENCES server(id_server);
+ALTER TABLE website ADD CONSTRAINT FK_website_id_system FOREIGN KEY (id_system) REFERENCES system(id_system);
 ALTER TABLE company ADD CONSTRAINT FK_company_id_website FOREIGN KEY (id_website) REFERENCES website(id_website);
 ALTER TABLE company ADD CONSTRAINT FK_company_id_country FOREIGN KEY (id_country) REFERENCES country(id_country);
-ALTER TABLE support ADD CONSTRAINT FK_support_id_website FOREIGN KEY (id_website) REFERENCES website(id_website);
-ALTER TABLE support ADD CONSTRAINT FK_support_id_system FOREIGN KEY (id_system) REFERENCES system(id_system);

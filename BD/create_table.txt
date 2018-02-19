@@ -32,10 +32,11 @@ CREATE TABLE website(
 	id_website  INT IDENTITY (1,1) NOT NULL ,
 	url_website VARCHAR (50)  ,
 	IP_address  VARCHAR (25)  ,
+	famous      bit   ,
 	id_country  INT   ,
 	id_company  INT   ,
 	id_server   INT   ,
-	id_system   INT   ,
+	id_OS       INT   ,
 	CONSTRAINT prk_constraint_website PRIMARY KEY NONCLUSTERED (id_website)
 );
 
@@ -58,7 +59,6 @@ CREATE TABLE company(
 	name_company VARCHAR (50)  ,
 	type_company VARCHAR (50)  ,
 	id_website   INT   ,
-	id_country   INT   ,
 	CONSTRAINT prk_constraint_company PRIMARY KEY NONCLUSTERED (id_company)
 );
 
@@ -74,12 +74,12 @@ CREATE TABLE server(
 
 
 /*------------------------------------------------------------
--- Table: system
+-- Table: OS_property
 ------------------------------------------------------------*/
-CREATE TABLE system(
-	id_system   INT IDENTITY (1,1) NOT NULL ,
-	type_system VARCHAR (50)  ,
-	CONSTRAINT prk_constraint_system PRIMARY KEY NONCLUSTERED (id_system)
+CREATE TABLE OS_property(
+	id_OS   INT IDENTITY (1,1) NOT NULL ,
+	type_OS VARCHAR (25)  ,
+	CONSTRAINT prk_constraint_OS_property PRIMARY KEY NONCLUSTERED (id_OS)
 );
 
 
@@ -89,6 +89,5 @@ ALTER TABLE attack ADD CONSTRAINT FK_attack_id_hacker FOREIGN KEY (id_hacker) RE
 ALTER TABLE website ADD CONSTRAINT FK_website_id_country FOREIGN KEY (id_country) REFERENCES country(id_country);
 ALTER TABLE website ADD CONSTRAINT FK_website_id_company FOREIGN KEY (id_company) REFERENCES company(id_company);
 ALTER TABLE website ADD CONSTRAINT FK_website_id_server FOREIGN KEY (id_server) REFERENCES server(id_server);
-ALTER TABLE website ADD CONSTRAINT FK_website_id_system FOREIGN KEY (id_system) REFERENCES system(id_system);
+ALTER TABLE website ADD CONSTRAINT FK_website_id_OS FOREIGN KEY (id_OS) REFERENCES OS_property(id_OS);
 ALTER TABLE company ADD CONSTRAINT FK_company_id_website FOREIGN KEY (id_website) REFERENCES website(id_website);
-ALTER TABLE company ADD CONSTRAINT FK_company_id_country FOREIGN KEY (id_country) REFERENCES country(id_country);

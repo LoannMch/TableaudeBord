@@ -2,13 +2,16 @@ import numpy as np
 import requests as r
 import bs4
 import pandas as pd
-import progressbar
 from time import sleep
 import logging as log
-
+import json
+import datetime
+import tqdm
+import os
+import uuid
 
 def call_api(api_url, to_parse_url) : 
-	data = r.post(url = api_url, json = {"url" : to_parse_url, "wait" : 9, "expand" : 1, "timeout" : 90.0})
+	data = r.post(url = api_url, json = {"url" : to_parse_url, "wait" : 20, "expand" : 1, "timeout" : 90.0})
 	data = data.text
 	soup = bs4.BeautifulSoup(data, "lxml")
 	data = soup.find_all('tr')
@@ -20,7 +23,7 @@ def extract_data(data) :
     pattern = '<td style="width: 14%;">Attack Type</td>'
     for i in range(len(data)) : 
         if pattern in str(data[i]): 
-            return data[ i +1 : len(data)]
+            return data[ i + 1 : len(data)]
 
 	#<td style="width: 34%;">Attacker</td>
 	#<td style="width: 12%;">Attacker IP</td>
@@ -32,45 +35,58 @@ def extract_data(data) :
 def delete_html(x) : 
     return x.text.split('\n')[2:][:-2]
 
-def return_json(data) : 
+def return_dic(data) : 
 	df = pd.DataFrame(np.array(data).reshape(len(data),5), columns = ['attacker', 'ip', 'attacker_country','target_country','attack_type'])
-
 	df['attacker_town'] = df['attacker_country'].apply(lambda x : x.split(',')[0].replace(' ',''))
 	df['target_town'] = df['target_country'].apply(lambda x : x.split(',')[0].replace(' ',''))
 	df['attacker_country'] = df['attacker_country'].apply(lambda x : x.split(',')[1].replace(' ',''))
 	df['target_country'] = df['target_country'].apply(lambda x : x.split(',')[1].replace(' ',''))
-	
-	return df.to_json(orient='index')
+	df['date'] = datetime.datetime.now().isoformat()
+	return df.to_dict('records')
+
+
+def write_json(data, cwd) :
+	with open('{}/norse_json/{}.json'.format(cwd,uuid.uuid4()), 'w') as outfile:
+		outfile.write(json.dumps(data))
 
 
 if __name__ == '__main__':
 
+	# To Do - Run API splash with docker and bash command : docker run -p 8050:8050 scrapinghub/splash
+
 	api_url = 'http://localhost:8050/render.html'
 	to_parse_url = "http://map.norsecorp.com/#/"
 
-	iteration = 200
+	cwd = os.getcwd()
 
+	iteration = 20000
 
-	bar = progressbar.ProgressBar(maxval=iteration, \
-    widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
-	
-	bar.start()
+	nb_attack_extracted = 0
 
-	for i in range(iteration):
+	attack_per_json = 0
 
-		bar.update(i+1)
-		try : 
-			data = call_api(api_url, to_parse_url) 
-			data = extract_data(data)
-			data = list(map(delete_html, data))
-			data = return_json(data) 
-			print(data)
-		except : 
-			log.error('No Data Found. \n')
+	for i in tqdm.trange(iteration):
 
 		
+		
+		data = call_api(api_url, to_parse_url) 
+		data = extract_data(data)
+		data = list(map(delete_html, data))
 
+		try : 
 
-	bar.finish()
+			data = return_dic(data) 
+
+			nb_attack_extracted += len(data)
+
+			if i % (iteration/10) == 0:
+				write_json(data, cwd) 
+
+		except : 
+
+			log.error('No Data Found. \n')
+		
+
+	print('Process terminated, {} attacks analysed.'.format(nb_attack_extracted))
 
 	

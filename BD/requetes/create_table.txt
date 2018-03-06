@@ -13,6 +13,7 @@ CREATE TABLE attack(
 	id_organisation INT   ,
 	id_hacker       INT   ,
 	id_city         INT   ,
+	id_type_attack  INT   ,
 	CONSTRAINT prk_constraint_attack PRIMARY KEY NONCLUSTERED (id_attack)
 );
 
@@ -33,15 +34,15 @@ CREATE TABLE attacker(
 -- Table: organisation
 ------------------------------------------------------------*/
 CREATE TABLE organisation(
-	id_organisation INT IDENTITY (1,1) NOT NULL ,
-	organisation    VARCHAR (25)  ,
-	url             VARCHAR (50)  ,
-	IP_address      VARCHAR (25)  ,
-	famous          bit   ,
-	id_country      INT   ,
-	id_server       INT   ,
-	id_OS           INT   ,
-	id_type_company INT   ,
+	id_organisation      INT IDENTITY (1,1) NOT NULL ,
+	organisation         VARCHAR (25)  ,
+	url                  VARCHAR (50)  ,
+	IP_address           VARCHAR (25)  ,
+	famous               bit   ,
+	id_country           INT   ,
+	id_server            INT   ,
+	id_OS                INT   ,
+	id_type_organisation INT   ,
 	CONSTRAINT prk_constraint_organisation PRIMARY KEY NONCLUSTERED (id_organisation)
 );
 
@@ -88,12 +89,22 @@ CREATE TABLE city(
 
 
 /*------------------------------------------------------------
--- Table: type_company
+-- Table: type_organisation
 ------------------------------------------------------------*/
-CREATE TABLE type_company(
-	id_type_company  INT IDENTITY (1,1) NOT NULL ,
-	lib_type_company VARCHAR (25)  ,
-	CONSTRAINT prk_constraint_type_company PRIMARY KEY NONCLUSTERED (id_type_company)
+CREATE TABLE type_organisation(
+	id_type_organisation  INT IDENTITY (1,1) NOT NULL ,
+	lib_type_organisation VARCHAR (25)  ,
+	CONSTRAINT prk_constraint_type_organisation PRIMARY KEY NONCLUSTERED (id_type_organisation)
+);
+
+
+/*------------------------------------------------------------
+-- Table: type_attack
+------------------------------------------------------------*/
+CREATE TABLE type_attack(
+	id_type_attack  INT IDENTITY (1,1) NOT NULL ,
+	lib_type_attack VARCHAR (50)  ,
+	CONSTRAINT prk_constraint_type_attack PRIMARY KEY NONCLUSTERED (id_type_attack)
 );
 
 
@@ -101,9 +112,10 @@ CREATE TABLE type_company(
 ALTER TABLE attack ADD CONSTRAINT FK_attack_id_organisation FOREIGN KEY (id_organisation) REFERENCES organisation(id_organisation);
 ALTER TABLE attack ADD CONSTRAINT FK_attack_id_hacker FOREIGN KEY (id_hacker) REFERENCES attacker(id_hacker);
 ALTER TABLE attack ADD CONSTRAINT FK_attack_id_city FOREIGN KEY (id_city) REFERENCES city(id_city);
+ALTER TABLE attack ADD CONSTRAINT FK_attack_id_type_attack FOREIGN KEY (id_type_attack) REFERENCES type_attack(id_type_attack);
 ALTER TABLE attacker ADD CONSTRAINT FK_attacker_id_city FOREIGN KEY (id_city) REFERENCES city(id_city);
 ALTER TABLE organisation ADD CONSTRAINT FK_organisation_id_country FOREIGN KEY (id_country) REFERENCES country(id_country);
 ALTER TABLE organisation ADD CONSTRAINT FK_organisation_id_server FOREIGN KEY (id_server) REFERENCES server(id_server);
 ALTER TABLE organisation ADD CONSTRAINT FK_organisation_id_OS FOREIGN KEY (id_OS) REFERENCES OS_property(id_OS);
-ALTER TABLE organisation ADD CONSTRAINT FK_organisation_id_type_company FOREIGN KEY (id_type_company) REFERENCES type_company(id_type_company);
+ALTER TABLE organisation ADD CONSTRAINT FK_organisation_id_type_organisation FOREIGN KEY (id_type_organisation) REFERENCES type_organisation(id_type_organisation);
 ALTER TABLE city ADD CONSTRAINT FK_city_id_country FOREIGN KEY (id_country) REFERENCES country(id_country);

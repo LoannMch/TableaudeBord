@@ -11,7 +11,7 @@ import os
 import uuid
 
 def call_api(api_url, to_parse_url) : 
-	data = r.post(url = api_url, json = {"url" : to_parse_url, "wait" : 20, "expand" : 1, "timeout" : 90.0})
+	data = r.post(url = api_url, json = {"url" : to_parse_url, "wait" : 10, "expand" : 1, "timeout" : 90.0})
 	data = data.text
 	soup = bs4.BeautifulSoup(data, "lxml")
 	data = soup.find_all('tr')
@@ -59,15 +59,19 @@ if __name__ == '__main__':
 
 	cwd = os.getcwd()
 
-	iteration = 20000
+	iteration = 2000
 
 	nb_attack_extracted = 0
 
 	attack_per_json = 0
 
+	res = []
+
+	compteur = 0
+
 	for i in tqdm.trange(iteration):
 
-		
+		compteur += 1
 		
 		data = call_api(api_url, to_parse_url) 
 		data = extract_data(data)
@@ -78,13 +82,19 @@ if __name__ == '__main__':
 			data = return_dic(data) 
 
 			nb_attack_extracted += len(data)
+			
+			res = res + data
 
-			if i % (iteration/10) == 0:
-				write_json(data, cwd) 
+			if compteur >= 200 :
+				
+				write_json(res, cwd) 
+				print('Attacks analysed since the begining : {} \n.'.format(nb_attack_extracted))
+				res = []
+				compteur = 0
 
 		except : 
 
-			log.error('No Data Found. \n')
+			log.info('No Data Found. \n')
 		
 
 	print('Process terminated, {} attacks analysed.'.format(nb_attack_extracted))

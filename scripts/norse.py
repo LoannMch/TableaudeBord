@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
 	cwd = os.getcwd()
 
-	iteration = 2000
+	iteration = 300
 
 	nb_attack_extracted = 0
 
@@ -73,19 +73,20 @@ if __name__ == '__main__':
 
 		compteur += 1
 		
-		data = call_api(api_url, to_parse_url) 
-		data = extract_data(data)
-		data = list(map(delete_html, data))
-
 		try : 
 
+			data = call_api(api_url, to_parse_url) 
+			data = extract_data(data)
+			data = list(map(delete_html, data))
+
+		
 			data = return_dic(data) 
 
 			nb_attack_extracted += len(data)
 			
 			res = res + data
 
-			if compteur >= 200 :
+			if compteur >= 100 :
 				
 				write_json(res, cwd) 
 				print('Attacks analysed since the begining : {} \n.'.format(nb_attack_extracted))
@@ -95,7 +96,10 @@ if __name__ == '__main__':
 		except : 
 
 			log.info('No Data Found. \n')
-		
+	
+	if len(res) > 0 : 
+		write_json(res, cwd)
+		print('Attacks analysed since the begining : {} \n.'.format(nb_attack_extracted))
 
 	print('Process terminated, {} attacks analysed.'.format(nb_attack_extracted))
 

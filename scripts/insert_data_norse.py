@@ -3,6 +3,9 @@ import json
 import os
 import glob
 
+
+def call_procedure()
+
 if __name__ == '__main__':
 	cwd = os.getcwd()
 
@@ -14,9 +17,9 @@ if __name__ == '__main__':
 
 		with open(file) as json_data:
 			data = json.load(json_data)
-		
+			
 		# To do rename with txt 	
 		print('File analyzed : {}'.format(fil_name))
 		
-		os.rename(file, '{}/norse_json/A{}.json'.format(cwd,file_name))
+		#os.rename(file, '{}/norse_json/A{}.json'.format(cwd,file_name))
 		#os.rename(file, '{}/norse_json/A{}.txt'.format(cwd,file_name))

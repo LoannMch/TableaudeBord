@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
 	cwd = os.getcwd()
 
-	iteration = 300
+	iteration = 500
 
 	nb_attack_extracted = 0
 
@@ -99,8 +99,8 @@ if __name__ == '__main__':
 	
 	if len(res) > 0 : 
 		write_json(res, cwd)
-		print('Attacks analysed since the begining : {} \n.'.format(nb_attack_extracted))
+		print('Attacks analysed since the begining : {}. \n'.format(nb_attack_extracted))
 
-	print('Process terminated, {} attacks analysed.'.format(nb_attack_extracted))
+	print('Process terminated, {} attacks analysed. \n'.format(nb_attack_extracted))
 
 	

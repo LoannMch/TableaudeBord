@@ -3,8 +3,26 @@ import json
 import os
 import glob
 
+import pyodbc
+
+# LAPTOP-4H4QSG7A\SQLEXPRESS
+con = pyodbc.connect("Driver={SQL Server};"
+                     "Server=LAPTOP-4H4QSG7A\SQLEXPRESS;"
+                     "Database=master;"
+                     "Trusted_Connection=yes;")
+
+cursor = con.cursor()
+cursor.execute('SELECT * FROM country')
+
+
+for row in cursor:
+    # print(row)
+    print('row = %r' % (row,))
+
 
 def call_procedure()
+
+def
 
 if __name__ == '__main__':
 	cwd = os.getcwd()

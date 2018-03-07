@@ -46,6 +46,7 @@ def return_dic(data) :
 
 
 def write_json(data, cwd) :
+	# You must create a repertory norse_json 
 	with open('{}/norse_json/{}.json'.format(cwd,uuid.uuid4()), 'w') as outfile:
 		outfile.write(json.dumps(data))
 

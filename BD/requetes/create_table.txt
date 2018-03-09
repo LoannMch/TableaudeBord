@@ -9,7 +9,6 @@
 CREATE TABLE attack(
 	id_attack       INT IDENTITY (1,1) NOT NULL ,
 	data_attack     DATETIME  ,
-	type_attack     VARCHAR (50)  ,
 	id_organisation INT   ,
 	id_hacker       INT   ,
 	id_city         INT   ,

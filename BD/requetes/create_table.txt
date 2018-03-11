@@ -8,7 +8,7 @@
 ------------------------------------------------------------*/
 CREATE TABLE attack(
 	id_attack       INT IDENTITY (1,1) NOT NULL ,
-	data_attack     DATETIME  ,
+	date_attack     DATETIME  ,
 	id_organisation INT   ,
 	id_hacker       INT   ,
 	id_city         INT   ,
@@ -22,7 +22,7 @@ CREATE TABLE attack(
 ------------------------------------------------------------*/
 CREATE TABLE attacker(
 	id_hacker     INT IDENTITY (1,1) NOT NULL ,
-	name_attacker VARCHAR (50)  ,
+	name_attacker VARCHAR (200)  ,
 	IP_attacker   VARCHAR (50)  ,
 	id_city       INT   ,
 	CONSTRAINT prk_constraint_attacker PRIMARY KEY NONCLUSTERED (id_hacker)

@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
 	cwd = os.getcwd()
 
-	iteration = 500
+	iteration = 10000
 
 	nb_attack_extracted = 0
 
@@ -87,7 +87,7 @@ if __name__ == '__main__':
 			
 			res = res + data
 
-			if compteur >= 100 :
+			if compteur >= 1000 :
 				
 				write_json(res, cwd) 
 				print('Attacks analysed since the begining : {} \n.'.format(nb_attack_extracted))

@@ -6,23 +6,28 @@ import glob
 import pyodbc
 
 # LAPTOP-4H4QSG7A\SQLEXPRESS
-con = pyodbc.connect("Driver={SQL Server};"
-                     "Server=LAPTOP-4H4QSG7A\SQLEXPRESS;"
-                     "Database=master;"
-                     "Trusted_Connection=yes;")
+#con = pyodbc.connect("Driver={SQL Server};"
+#                     "Server=LAPTOP-4H4QSG7A\SQLEXPRESS;"
+#                    "Database=master;"
+#                     "Trusted_Connection=yes;")
 
-cursor = con.cursor()
-cursor.execute('SELECT * FROM country')
+#cursor = con.cursor()
+#cursor.execute('SELECT * FROM country')
+
+con = None
+
+def call_procedure(con, data, file_name):
+	try : 
+		# Here we insert data 
+		data = pd.DataFrame.from_dict(data)
 
 
-for row in cursor:
-    # print(row)
-    print('row = %r' % (row,))
+		# If calling procedure is ok : rename fil as txt
+		#os.rename(file, '{}/norse_json/{}.txt'.format(cwd,file_name))
 
+	except : 
+		log.error('Error for file : {}'.format(file_name))
 
-def call_procedure()
-
-def
 
 if __name__ == '__main__':
 	cwd = os.getcwd()
@@ -35,9 +40,11 @@ if __name__ == '__main__':
 
 		with open(file) as json_data:
 			data = json.load(json_data)
-			
+		
+		call_procedure(con, data, file_name)
+		
 		# To do rename with txt 	
-		print('File analyzed : {}'.format(fil_name))
+		print('File analyzed : {}'.format(file_name))
 		
 		#os.rename(file, '{}/norse_json/A{}.json'.format(cwd,file_name))
-		#os.rename(file, '{}/norse_json/A{}.txt'.format(cwd,file_name))
+		

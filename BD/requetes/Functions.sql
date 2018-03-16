@@ -150,7 +150,7 @@ BEGIN
 END
 GO
 
--- test de la fonction F_Id_type_attack 
+-- test de la fonction F_Id_type_server 
 declare @ret int
 exec @ret = F_Id_type_server @lib_type_server='Apache'
 print @ret
@@ -161,7 +161,9 @@ from type_server;
 GO
 
 /* 
-
+	Procedure qui prend un OS_property en parametre d'entrée
+	retourne l'id_OS_property associé en sortie
+	si l'OS_property n'est pas dans la bd, il est inséré 
 */
 
 CREATE OR ALTER PROCEDURE F_Id_OS_property
@@ -169,24 +171,93 @@ CREATE OR ALTER PROCEDURE F_Id_OS_property
 AS
 DECLARE @id_OS_property int
 BEGIN
-	SELECT @id_OS_property = id_type_server
-	FROM type_server
+	SELECT @id_OS_property = id_OS_property
+	FROM OS_property
 	WHERE lib_OS_property = @lib_OS_property;
 
-	IF(@id_type_server is null)
-		Insert Into type_server(lib_type_server) values(@lib_type_server);
-	IF(@id_type_server is null)
-		Select @id_type_server = @@identity;
-	RETURN(@id_type_server); 
+	IF(@id_OS_property is null)
+		Insert Into OS_property(lib_OS_property) values(@lib_OS_property);
+	IF(@id_OS_property is null)
+		Select @id_OS_property = @@identity;
+	RETURN(@id_OS_property); 
 END
 GO
 
--- test de la fonction F_Id_type_attack 
+-- test de la fonction F_Id_OS_property 
 declare @ret int
-exec @ret = F_Id_type_server @lib_type_server='Apache'
+exec @ret = F_Id_OS_property @lib_OS_property='Linux'
 print @ret
 GO
 
 SELECT *
-from type_server;
+from OS_property;
+GO
+
+/* 
+	Procedure qui prend un type organisation en parametre d'entrée
+	retourne l'id_type_organisation associé en sortie
+	si le type organisation n'est pas dans la bd, il est inséré 
+*/
+
+CREATE OR ALTER PROCEDURE F_Id_type_organisation
+	@lib_type_organisation varchar(50)
+AS
+DECLARE @id_type_organisation int
+BEGIN
+	SELECT @id_type_organisation = id_type_organisation
+	FROM type_organisation
+	WHERE lib_type_organisation = @lib_type_organisation;
+
+	IF(@id_type_organisation is null)
+		Insert Into type_organisation(lib_type_organisation) values(@lib_type_organisation);
+	IF(@id_type_organisation is null)
+		Select @id_type_organisation = @@identity;
+	RETURN(@id_type_organisation); 
+END
+GO
+
+-- test de la fonction F_Id_type_organisation 
+declare @ret int
+exec @ret = F_Id_type_organisation @lib_type_organisation='Information'
+print @ret
+GO
+
+SELECT *
+from type_organisation;
+GO
+
+/* 
+	Procedure qui prend un type organisation en parametre d'entrée
+	retourne l'id_type_organisation associé en sortie
+	si le type organisation n'est pas dans la bd, il est inséré 
+*/
+
+CREATE OR ALTER PROCEDURE F_Id_organisation
+	@lib_type_organisation varchar(50),
+	@url varchar(50),
+	@IP_address varchar(50),
+	@famous bit,
+AS
+DECLARE @id_organisation int
+BEGIN
+	SELECT @id_type_organisation = id_type_organisation
+	FROM type_organisation
+	WHERE lib_type_organisation = @lib_type_organisation;
+
+	IF(@id_type_organisation is null)
+		Insert Into type_organisation(lib_type_organisation) values(@lib_type_organisation);
+	IF(@id_type_organisation is null)
+		Select @id_type_organisation = @@identity;
+	RETURN(@id_type_organisation); 
+END
+GO
+
+-- test de la fonction F_Id_type_organisation 
+declare @ret int
+exec @ret = F_Id_type_organisation @lib_type_organisation='Information'
+print @ret
+GO
+
+SELECT *
+from type_organisation;
 GO

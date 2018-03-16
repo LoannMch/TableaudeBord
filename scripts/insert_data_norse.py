@@ -31,7 +31,7 @@ def update_date(x):
     return('{:02d}-{:02d}-{} {:02d}:{:02d}:{:02d}'.format(x.day, x.month, x.year, x.hour, x.minute, x.second))
 
 
-def call_procedure(con, data, file_name):
+def call_procedure(con, data, file_name, mapping_country):
 
 	#try : 
 		# Here we insert data 
@@ -39,6 +39,9 @@ def call_procedure(con, data, file_name):
     data['date'] = pd.to_datetime(data['date'])
     data['date'] = data['date'].apply(lambda x : update_date(x))
     data.apply(procedure_insert, axis = 'columns')
+
+	data['attacker_country'] = data['attacker_country'].apply(lambda x : x.replace(x, mapping_country[x]))
+	data['target_country'] = data['target_country'].apply(lambda x : x.replace(x, mapping_country[x]))
 
 		# If calling procedure is ok : rename fil as txt
 		#os.rename(file, '{}/norse_json/{}.txt'.format(cwd,file_name))
@@ -48,6 +51,65 @@ def call_procedure(con, data, file_name):
 
 
 if __name__ == '__main__':
+
+	mapping_country = {
+	    'NL' : 'netherlands', 
+	    'CN' : 'china', 
+	    'US' : 'united states', 
+	    'MX' : 'mexico', 
+	    'TR' : 'turkey', 
+	    'PK' : 'pakistan', 
+	    'HK' : 'hong kong', 
+	    'VN' : 'vietnam', 
+	    'RO' : 'roumania', 
+	    'IT' : 'italia', 
+	    'KR' : 'south korea',
+	    'JP' : 'japan', 
+	    'CH' : 'swiss', 
+	    'UA' : 'ukraine', 
+	    'ES' : 'spain', 
+	    'CZ' : 'czech republic', 
+	    'BR' : 'brazil', 
+	    'IN' : 'india', 
+	    'PH' : 'philippines', 
+	    'GB' : 'united kingdom', 
+	    'PL' : 'poland', 
+	    'FR' : 'france', 
+	    'IL' : 'israel', 
+	    'CA' : 'canada', 
+	    'CO' : 'colombia', 
+	    'DE' : 'germany', 
+	    'SA' : 'saudi arabia', 
+	    'AM' : 'armenia', 
+	    'BO' : 'bolivia', 
+	    'BG' : 'bulgaria', 
+	    'AR' : 'argentina', 
+	    'TW' : 'taiwan', 
+	    'MD' : 'moldova',
+	    'ID' : 'indonesia', 
+	    'BE' : 'belgium', 
+	    'TH' : 'thailand', 
+	    'PT' : 'portugal', 
+	    'EG' : 'egypt', 
+	    'CL' : 'chile', 
+	    'NZ' : 'new zealand', 
+	    'RU' : 'russia', 
+	    'CY' : 'cyprus', 
+	    'BM' : 'bermuda', 
+	    'MN' : 'mongolia',
+	    'IR' : 'ireland', 
+	    'BD' : 'bangladesh', 
+	    'SI' : 'slovenia', 
+	    'VE' : 'venezuela', 
+	    'AU' : 'australia', 
+	    'AE' : 'united arab emirates',
+	    'NO' : 'norway',
+	    'SG' : 'singapore',
+	    'IE' : 'ireland',
+	    'IS' : 'iceland',
+	    'AT' : 'austria'    
+	}
+
     con = pyodbc.connect("Driver={SQL Server};"
                              "Server=LAPTOP-4H4QSG7A\SQLEXPRESS;"
                              "Database=master;"
@@ -59,7 +121,7 @@ if __name__ == '__main__':
         file_name = file.split('/')[-1].split('.json')[0]
         with open(file) as json_data:
             data = json.load(json_data)
-            call_procedure(con, data, file_name)
+            call_procedure(con, data, file_name, mapping_country)
 		
         # To do rename with txt 	
         print('File analyzed : {}'.format(file_name))

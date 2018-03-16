@@ -126,3 +126,67 @@ GO
 SELECT *
 from attack;
 GO
+
+/* 
+	Procedure qui prend un type de serveur en parametre d'entrée
+	retourne l'id_type_server associé en sortie
+	si le type de serveur n'est pas dans la bd, il est inséré 
+*/
+
+CREATE OR ALTER PROCEDURE F_Id_type_server
+	@lib_type_server varchar(50)
+AS
+DECLARE @id_type_server int
+BEGIN
+	SELECT @id_type_server = id_type_server
+	FROM type_server
+	WHERE lib_type_server = @lib_type_server;
+
+	IF(@id_type_server is null)
+		Insert Into type_server(lib_type_server) values(@lib_type_server);
+	IF(@id_type_server is null)
+		Select @id_type_server = @@identity;
+	RETURN(@id_type_server); 
+END
+GO
+
+-- test de la fonction F_Id_type_attack 
+declare @ret int
+exec @ret = F_Id_type_server @lib_type_server='Apache'
+print @ret
+GO
+
+SELECT *
+from type_server;
+GO
+
+/* 
+
+*/
+
+CREATE OR ALTER PROCEDURE F_Id_OS_property
+	@lib_OS_property varchar(50)
+AS
+DECLARE @id_OS_property int
+BEGIN
+	SELECT @id_OS_property = id_type_server
+	FROM type_server
+	WHERE lib_OS_property = @lib_OS_property;
+
+	IF(@id_type_server is null)
+		Insert Into type_server(lib_type_server) values(@lib_type_server);
+	IF(@id_type_server is null)
+		Select @id_type_server = @@identity;
+	RETURN(@id_type_server); 
+END
+GO
+
+-- test de la fonction F_Id_type_attack 
+declare @ret int
+exec @ret = F_Id_type_server @lib_type_server='Apache'
+print @ret
+GO
+
+SELECT *
+from type_server;
+GO

@@ -41,7 +41,7 @@ BEGIN
 END
 GO
 
-exec InsertDataFromNorse @type_attack='ddos',@target_country='France',@target_town='Carcassonne',@attacker_town='Toulouse',@attacker_country='France',@attacker='lolo-bucheron',@ip='100.93.3.26',@date='2018-03-07 13:36:12'
+exec InsertDataFromNorse @type_attack='ddos',@target_country='France',@target_town='Carcassonne',@attacker_town='Toulouse',@attacker_country='France',@attacker='lolo-bucheron',@ip='100.93.3.26',@date='2018-03-11 08:48:10.300329'
 GO
 
 

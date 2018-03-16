@@ -38,13 +38,16 @@ def call_procedure(con, data, file_name, mapping_country):
     data = pd.DataFrame.from_dict(data)
     data['date'] = pd.to_datetime(data['date'])
     data['date'] = data['date'].apply(lambda x : update_date(x))
-    data.apply(procedure_insert, axis = 'columns')
 
 	data['attacker_country'] = data['attacker_country'].apply(lambda x : x.replace(x, mapping_country[x]))
 	data['target_country'] = data['target_country'].apply(lambda x : x.replace(x, mapping_country[x]))
 
+    data.apply(procedure_insert, axis = 'columns')
+
+    os.rename(file, '{}/norse_json/{}.txt'.format(cwd,file_name))
+
 		# If calling procedure is ok : rename fil as txt
-		#os.rename(file, '{}/norse_json/{}.txt'.format(cwd,file_name))
+	
 
 	#except : 
 	#	log.error('Error for file : {}'.format(file_name))

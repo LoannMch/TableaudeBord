@@ -13,26 +13,8 @@ import re
 import numpy as np
 import pandas as pd
 
-data = pd.read_csv('FinalSource_Real Cases.csv', sep=',',
+data = pd.read_csv('myData21000.csv', sep=',',
                    error_bad_lines=False, encoding='ISO-8859-1')
-
-
-def extract_company(url):
-    try:
-        try:
-            company = url.split('www.')[1]
-        except:
-            company = url.split('//')[1]
-        company = company.split('.')[0]
-        return company
-    except:
-        return np.nan
-
-data['company'] = data['URL'].apply(extract_company)
-data['retrieveCountry'] = pd.Series([np.nan]*212093)
-data['retrieveIndustry'] = pd.Series([np.nan]*212093)
-
-
 
 
 def retrieve_infobox_wiki(company):
@@ -68,42 +50,33 @@ def retrieve_industry(infobox):
     type_Industry = np.nan
     if infobox:
         tab = infobox.get_text().split()
-        if re.search('Industry ',' '.join(tab)) is not None:
+        if re.search('Industry ', ' '.join(tab)) is not None:
             type_Industry = tab[tab.index('Industry')+1]
     return(type_Industry)
 
 
-df_infobox = pd.DataFrame(data[17000:27000]['company'].apply(retrieve_infobox_wiki))
+df_infobox = pd.DataFrame(data[21000:41000]['company'].apply(
+        retrieve_infobox_wiki))
 
-for ii in range(17000,17000+len(df_infobox)):
-    if df_infobox['company'][ii]: 
-        print(ii)
-        data['retrieveIndustry'][ii] = retrieve_industry(df_infobox['company'][ii])
-        data['retrieveCountry'][ii] = retrieve_country(df_infobox['company'][ii])
-        
-data.to_csv('myData27000.csv', sep=',', header=True, index=False)
+for ii in range(21000, 21000+len(df_infobox)):
+    if df_infobox['company'][ii]:
+        data['retrieveIndustry'][ii] = retrieve_industry(
+                df_infobox['company'][ii])
+        data['retrieveCountry'][ii] = retrieve_country(
+                df_infobox['company'][ii])
 
+data.to_csv('myData41000.csv', sep=',', header=True, index=False)
 
-#test_retrieve_Country = pd.DataFrame(data[0:12000]['company'].apply(retrieve_country))
-#test_retrieve_Industry = pd.DataFrame(data[11000:12000]['company'].apply(retrieve_industry))
 
 print(data['retrieveCountry'].notnull().sum())
 print(data['retrieveIndustry'].notnull().sum())
 
 
-#0:1000 --> 18pays & 15 industry 
-#1000 :2000 --> 23 pays & 17 industry 
-#2000:3000 -> 15 pays & 15 industry
-#3000:4000 ->  33 pays & 29 industry
-#4000:5000 -> 54 pays & 46 industry
-#5000:6000 -> 17 pays & 17 industry
-#6000:7000 -> 31 pays & 29 industry
-#7000 : 8000 -> 38 pays et 32 industry
-#8000:9000 -> 26 pays et 25 industry
-#9000: 10000 -> 36 pays et 33 industry
-#10000: 11000 -> 33 pays et 29 industry
-#data['Country_retrieve'] = pd.DataFrame(data['company'].apply(retrieve_country))
-#data['Industry_retrieve'] = pd.DataFrame(data['company'].apply(retrieve_industry))
+#17000 : 507 country et 444 Industry
+#20000 : 595 country et 520 Industry
+#20500 : 611 country & 535 Industry
+#21000 : 623 country & 547 Indutry
+
 ###Objectif Vendredi : 
     #REMPLIR LA BASE DE DONNEE
     #AVANCER LE RAPPORT

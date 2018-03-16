@@ -37,16 +37,11 @@ BEGIN
 	exec @id_attacker = F_Id_attacker @name_attacker=@attacker, @IP_attacker=@ip, @id_city=@id_attacker_city
 	print @id_attacker
 
-	INSERT INTO attack(date_attack,id_hacker,id_city,id_type_attack) values(@date,@id_attacker,@id_target_city,@id_type_attack)
+	INSERT INTO attack(date_attack,id_attacker,id_city,id_type_attack) values(@date,@id_attacker,@id_target_city,@id_type_attack)
 END
 GO
 
-exec InsertDataFromNorse @type_attack='ddos',@target_country='France',@target_town='Carcassonne',@attacker_town='Toulouse',@attacker_country='France',@attacker='lolo-bucheron',@ip='100.93.3.26',@date='2018-03-11 08:48:10.300329'
+exec InsertDataFromNorse @type_attack='ddos',@target_country='France',@target_town='Carcassonne',@attacker_town='Toulouse',@attacker_country='France',@attacker='lolo-bucheron',@ip='100.93.3.26',@date='2018-03-11 08:48:10'
 GO
 
 
-SELECT *
-from country;
-
-SELECT *
-from city;

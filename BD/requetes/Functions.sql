@@ -27,8 +27,7 @@ print @ret
 GO
 
 SELECT *
-from type_attack
-where lib_type_attack='ddos';
+from type_attack;
 GO
 
 /*
@@ -43,10 +42,10 @@ DECLARE @id_country int
 BEGIN
 	SELECT @id_country = id_country
 	FROM country
-	WHERE name_country = @name_country;
+	WHERE lib_country = @name_country;
 
 	IF(@id_country is null)
-		Insert Into country(name_country) values(@name_country);
+		Insert Into country(lib_country) values(@name_country);
 	IF(@id_country is null)
 		Select @id_country = @@identity;
 	RETURN(@id_country); 
@@ -76,10 +75,10 @@ DECLARE @id_city int
 BEGIN
 	SELECT @id_city = id_city
 	FROM city
-	WHERE name_city = @name_city;
+	WHERE lib_city = @name_city;
 
 	IF(@id_city is null)
-		Insert Into city(name_city, id_country) values(@name_city, @id_country);
+		Insert Into city(lib_city, id_country) values(@name_city, @id_country);
 	IF(@id_city is null)
 		Select @id_city = @@identity;
 	RETURN(@id_city); 
@@ -103,15 +102,15 @@ CREATE OR ALTER PROCEDURE F_Id_attacker
 AS
 DECLARE @id_attacker int
 BEGIN
-	SELECT @id_attacker = id_hacker
+	SELECT @id_attacker = id_attacker
 	FROM attacker
-	WHERE name_attacker = @name_attacker;
+	WHERE lib_attacker = @name_attacker;
 
 	IF(@id_attacker is null)
 		IF(@id_city is null)
-			Insert Into attacker(name_attacker, IP_attacker, id_city) values(@name_attacker, @IP_attacker, null);
+			Insert Into attacker(lib_attacker, IP_attacker, id_city) values(@name_attacker, @IP_attacker, null);
 		ELSE
-			Insert Into attacker(name_attacker, IP_attacker, id_city) values(@name_attacker, @IP_attacker, @id_city);
+			Insert Into attacker(lib_attacker, IP_attacker, id_city) values(@name_attacker, @IP_attacker, @id_city);
 	IF(@id_attacker is null)
 		Select @id_attacker = @@identity;
 	RETURN(@id_attacker); 
@@ -119,12 +118,12 @@ END
 
 -- test de la fonction F_Id_city 
 declare @ret int
-exec @ret = F_Id_attacker @name_attacker='lolo-bucheron', @IP_attacker='100.93.3.26', @id_city='2'
+exec @ret = F_Id_attacker @name_attacker='lolo-bucheron', @IP_attacker='100.93.3.26', @id_city='1'
 print @ret
 GO
 
 SELECT *
-from attack;
+from attacker;
 GO
 
 /* 

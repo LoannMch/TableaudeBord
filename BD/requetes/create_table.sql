@@ -8,7 +8,7 @@
 ------------------------------------------------------------*/
 CREATE TABLE attack(
 	id_attack       INT IDENTITY (1,1) NOT NULL ,
-	data_attack     DATETIME  ,
+	date_attack     DATETIME  ,
 	id_organisation INT   ,
 	id_attacker     INT   ,
 	id_city         INT   ,

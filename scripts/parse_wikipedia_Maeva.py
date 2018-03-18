@@ -57,8 +57,9 @@ def retrieve_industry(infobox):
 
 beggin = time.time()
 
-n0 = 75000
-n1 = 76000
+n0 = 211000
+n1 = 212092
+
 for jj in range(0, 20):
     df_infobox = pd.DataFrame(data[n0:n1]['company'].apply(
             retrieve_infobox_wiki))
@@ -69,14 +70,15 @@ for jj in range(0, 20):
             data['retrieveCountry'][ii] = retrieve_country(
                     df_infobox['company'][ii])
 
-    data.to_csv('myData'+str(n1)+'.csv', sep=',', header=True, index=False)
+    data.to_csv('myData'+str(n0)+'_'+str(n1)+'.csv', sep=',', header=True,
+                index=False)
 
     temps = time.time() - beggin
     print(data['retrieveCountry'].notnull().sum())
     print(data['retrieveIndustry'].notnull().sum())
     print(temps)
-    n0 = n1
-    n1 += 1000
+    n1 = n0
+    n0 -= 1000
 
 
 #17000 : 507 country et 444 Industry
@@ -88,8 +90,6 @@ for jj in range(0, 20):
 #38000 : 826 country & 705 Industry
 #48000 : 880 Country & 742 Industry
 #52000 : 901 countru &756 Industry
-#71000 : 985 Country & 818 Industry
-#73000 : 994 Country & 823 Industry
 
 
 ###Objectif Vendredi : 

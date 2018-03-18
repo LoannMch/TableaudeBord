@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 import time
 
-data = pd.read_csv('myData70000.csv', sep=',',
+data = pd.read_csv('myData79000.csv', sep=',',
                    error_bad_lines=False, encoding='ISO-8859-1')
 
 
@@ -57,24 +57,28 @@ def retrieve_industry(infobox):
 
 beggin = time.time()
 
-n0 = 80000
-n1 = 100000
+n0 = 79000
+n1 = 80000
 
-df_infobox = pd.DataFrame(data[n0:n1]['company'].apply(retrieve_infobox_wiki))
-for ii in range(n0, n0+len(df_infobox)):
-    if df_infobox['company'][ii]:
-        data['retrieveIndustry'][ii] = retrieve_industry(
-                df_infobox['company'][ii])
-        data['retrieveCountry'][ii] = retrieve_country(
-                df_infobox['company'][ii])
+for jj in range(0, 40):
+    df_infobox = pd.DataFrame(data[n0:n1]['company'].apply(
+            retrieve_infobox_wiki))
+    for ii in range(n0, n0+len(df_infobox)):
+        if df_infobox['company'][ii]:
+            data['retrieveIndustry'][ii] = retrieve_industry(
+                    df_infobox['company'][ii])
+            data['retrieveCountry'][ii] = retrieve_country(
+                    df_infobox['company'][ii])
 
-data.to_csv('myData'+str(n1)+'.csv', sep=',', header=True, index=False)
+    data.to_csv('myData'+str(n0)+'_'+str(n1)+'.csv', sep=',', header=True,
+                index=False)
 
-temps = time.time() - beggin
-print(data['retrieveCountry'].notnull().sum())
-print(data['retrieveIndustry'].notnull().sum())
-print(temps)
-
+    temps = time.time() - beggin
+    print(data['retrieveCountry'].notnull().sum())
+    print(data['retrieveIndustry'].notnull().sum())
+    print(temps)
+    n0 = n1
+    n1+=1000
 
 #17000 : 507 country et 444 Industry
 #20000 : 595 country et 520 Industry

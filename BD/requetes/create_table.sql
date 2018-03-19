@@ -23,7 +23,6 @@ CREATE TABLE attack(
 CREATE TABLE attacker(
 	id_attacker  INT IDENTITY (1,1) NOT NULL ,
 	lib_attacker VARCHAR (200)  ,
-	IP_attacker  VARCHAR (200)  ,
 	id_city      INT   ,
 	CONSTRAINT prk_constraint_attacker PRIMARY KEY NONCLUSTERED (id_attacker)
 );
@@ -35,8 +34,6 @@ CREATE TABLE attacker(
 CREATE TABLE organisation(
 	id_organisation      INT IDENTITY (1,1) NOT NULL ,
 	lib_organisation     VARCHAR (200)  ,
-	url                  VARCHAR (200)  ,
-	IP_address           VARCHAR (200)  ,
 	famous               bit   ,
 	id_country           INT   ,
 	id_type_server       INT   ,

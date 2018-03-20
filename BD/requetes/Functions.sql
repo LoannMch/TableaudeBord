@@ -97,7 +97,6 @@ GO
 -- A compléter pour les données de Zone-H
 CREATE OR ALTER PROCEDURE F_Id_attacker
 	@name_attacker varchar(200),
-	@IP_attacker varchar(50),
 	@id_city int
 AS
 DECLARE @id_attacker int
@@ -108,9 +107,9 @@ BEGIN
 
 	IF(@id_attacker is null)
 		IF(@id_city is null)
-			Insert Into attacker(lib_attacker, IP_attacker, id_city) values(@name_attacker, @IP_attacker, null);
+			Insert Into attacker(lib_attacker, id_city) values(@name_attacker, null);
 		ELSE
-			Insert Into attacker(lib_attacker, IP_attacker, id_city) values(@name_attacker, @IP_attacker, @id_city);
+			Insert Into attacker(lib_attacker, id_city) values(@name_attacker, @id_city);
 	IF(@id_attacker is null)
 		Select @id_attacker = @@identity;
 	RETURN(@id_attacker); 
@@ -118,7 +117,7 @@ END
 
 -- test de la fonction F_Id_city 
 declare @ret int
-exec @ret = F_Id_attacker @name_attacker='lolo-bucheron', @IP_attacker='100.93.3.26', @id_city='1'
+exec @ret = F_Id_attacker @name_attacker='lolo-bucheron', @id_city='1'
 print @ret
 GO
 
@@ -206,7 +205,6 @@ BEGIN
 	SELECT @id_type_organisation = id_type_organisation
 	FROM type_organisation
 	WHERE lib_type_organisation = @lib_type_organisation;
-
 	IF(@id_type_organisation is null)
 		Insert Into type_organisation(lib_type_organisation) values(@lib_type_organisation);
 	IF(@id_type_organisation is null)
@@ -232,31 +230,33 @@ GO
 */
 
 CREATE OR ALTER PROCEDURE F_Id_organisation
-	@lib_type_organisation varchar(50),
-	@url varchar(50),
-	@IP_address varchar(50),
+	@lib_organisation varchar(50),
 	@famous bit,
+	@id_country int,
+	@id_type_server int,
+	@id_OS_property int,
+	@id_type_organisation int
 AS
 DECLARE @id_organisation int
 BEGIN
-	SELECT @id_type_organisation = id_type_organisation
-	FROM type_organisation
-	WHERE lib_type_organisation = @lib_type_organisation;
+	SELECT @id_organisation = id_organisation
+	FROM organisation
+	WHERE lib_organisation = @lib_organisation;
 
-	IF(@id_type_organisation is null)
-		Insert Into type_organisation(lib_type_organisation) values(@lib_type_organisation);
-	IF(@id_type_organisation is null)
-		Select @id_type_organisation = @@identity;
-	RETURN(@id_type_organisation); 
+	IF(@id_organisation is null)
+		Insert Into organisation(lib_organisation, famous, id_country, id_type_server, id_OS_property, id_type_organisation) values(@lib_organisation, @famous, @id_country, @id_type_server, @id_OS_property, @id_type_organisation);
+	IF(@id_organisation is null)
+		Select @id_organisation = @@identity;
+	RETURN(@id_organisation); 
 END
 GO
 
 -- test de la fonction F_Id_type_organisation 
 declare @ret int
-exec @ret = F_Id_type_organisation @lib_type_organisation='Information'
+exec @ret = F_Id_organisation @lib_organisation='Oracle', @famous=1, @id_country=1, @id_type_server=1, @id_OS_property=1, @id_type_organisation=1
 print @ret
 GO
 
 SELECT *
-from type_organisation;
+from organisation;
 GO

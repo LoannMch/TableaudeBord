@@ -21,7 +21,7 @@ BEGIN
 	IF(@attacker is null)
 		SET @id_attacker = null;
 	ELSE
-		exec @id_attacker = F_Id_attacker @name_attacker='lolo-bucheron', @id_city=null;
+		exec @id_attacker = F_Id_attacker @name_attacker=@attacker, @id_city=null;
 	print @id_attacker
 
 	IF(@lib_type_server is null)

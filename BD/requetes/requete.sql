@@ -21,4 +21,10 @@ AND  ci2.id_country =co2.id_country
 GROUP BY co1.lib_country, co2.lib_country
 ORDER BY count(id_attack) DESC;
 
-
+SELECT count(id_attack) as Nb_attack,lib_type_attack,lib_country
+FROM attack, type_attack, city ,country
+WHERE attack.id_type_attack = type_attack.id_type_attack
+AND attack.id_city = city.id_city
+AND  city.id_country =country.id_country
+GROUP BY lib_type_attack,lib_country
+ORDER BY count(id_attack) DESC;

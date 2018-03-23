@@ -7,26 +7,12 @@ import pyodbc
 
 
 def procedure_insert(row):
-    
     sql = 'exec InsertDataFromNorse @type_attack=\''+row['attack_type']+'\',@target_country=\''+row['target_country']+'\',@target_town=\''+row['target_town']+'\',@attacker_town=\''+row['attacker_town']+'\',@attacker_country=\''+row['attacker_country']+'\',@attacker=\''+row['attacker']+'\',@date=\''+row['date']+'\''
-    #print(sql)
     cursor = con.cursor()
     cursor.execute(sql)
     cursor.commit()
-    '''
-    print(row['attack_type'])
-    print(row['attacker'])
-    
-    print(row['attacker_country'])
-    print(row['target_country'])
-    
-    print(row['target_town'])
-    print(row['attacker_town'])
-       
-    print(row['date'])
-    print(row['ip'])'''
 
-  
+
 def update_date(x):
     return('{:02d}-{:02d}-{} {:02d}:{:02d}:{:02d}'.format(x.day, x.month, x.year, x.hour, x.minute, x.second))
 

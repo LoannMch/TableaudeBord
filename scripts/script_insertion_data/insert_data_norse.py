@@ -8,7 +8,7 @@ import pyodbc
 
 def procedure_insert(row):
     
-    sql = 'exec InsertDataFromNorse @type_attack=\''+row['attack_type']+'\',@target_country=\''+row['target_country']+'\',@target_town=\''+row['target_town']+'\',@attacker_town=\''+row['attacker_town']+'\',@attacker_country=\''+row['attacker_country']+'\',@attacker=\''+row['attacker']+'\',@ip=\''+row['ip']+'\',@date=\''+row['date']+'\''
+    sql = 'exec InsertDataFromNorse @type_attack=\''+row['attack_type']+'\',@target_country=\''+row['target_country']+'\',@target_town=\''+row['target_town']+'\',@attacker_town=\''+row['attacker_town']+'\',@attacker_country=\''+row['attacker_country']+'\',@attacker=\''+row['attacker']+'\',@date=\''+row['date']+'\''
     #print(sql)
     cursor = con.cursor()
     cursor.execute(sql)

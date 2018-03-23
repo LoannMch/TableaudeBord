@@ -18,9 +18,6 @@ def update_date(x):
 
 
 def call_procedure(con, data, file_name, mapping_country):
-
-	#try : 
-		# Here we insert data 
     data = pd.DataFrame.from_dict(data)
     data['date'] = pd.to_datetime(data['date'])
     data['date'] = data['date'].apply(lambda x : update_date(x))
@@ -31,14 +28,6 @@ def call_procedure(con, data, file_name, mapping_country):
     data.apply(procedure_insert, axis = 'columns')
 
     
-
-		# If calling procedure is ok : rename fil as txt
-	
-
-	#except : 
-	#	log.error('Error for file : {}'.format(file_name))
-
-
 if __name__ == '__main__':
 
     mapping_country = {
@@ -98,21 +87,24 @@ if __name__ == '__main__':
 	    'IS' : 'iceland',
 	    'AT' : 'austria'    
     }
+
     con = pyodbc.connect("Driver={SQL Server};"
                             "Server=LAPTOP-4H4QSG7A\SQLEXPRESS;"
                             "Database=master;"
                             "Trusted_Connection=yes;")
+
     cwd = os.getcwd()
     list_file = glob.glob("{}/norse_json/*.json".format(cwd))
-    #list_file = ['E:/M1SID/S8/Projet_TableaudeBord/Hacking/TableaudeBord/scripts/norse_json/test.json']
+
     for file in list_file : 
+
         file_name = file.split('/')[-1].split('.json')[0]
+
         with open(file) as json_data:
+
             data = json.load(json_data)
             call_procedure(con, data, file_name, mapping_country)
-            
-            # To do rename with txt 	
+            	
         print('File analyzed : {}'.format(file_name))
-        #os.rename(file, '{}\norse_json\{}.txt'.format(cwd,file_name))
-		  # os.rename(file, '{}/norse_json/A{}.json'.format(cwd,file_name))
+
 		

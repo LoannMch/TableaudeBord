@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 import time
 
-data = pd.read_csv('myData52000.csv', sep=',',
+data = pd.read_csv('FinalSource_Real Cases.csv', sep=',',
                    error_bad_lines=False, encoding='ISO-8859-1')
 
 
@@ -41,7 +41,7 @@ def retrieve_country(infobox):
         for tag_th in infobox.find_all('th', attrs={"scope": "row"}):
             if tag_th.get_text() == 'Country':
                 country = tag_th.parent.find('td').get_text()
-            if tag_th.get_text() == 'Headquarters' and np.isnan(country):
+            if tag_th.get_text() == 'Headquarters' and (country == np.nan):
                 tag_country = tag_th.parent.find('td')
                 country = tag_country.get_text().split(', ')[-1]
     return(country)
@@ -55,11 +55,12 @@ def retrieve_industry(infobox):
             type_Industry = tab[tab.index('Industry')+1]
     return(type_Industry)
 
+
 beggin = time.time()
 
-n0 = 75000
-n1 = 76000
-for jj in range(0, 20):
+n0 = 0
+n1 = 1000
+for jj in range(0, 213000):
     df_infobox = pd.DataFrame(data[n0:n1]['company'].apply(
             retrieve_infobox_wiki))
     for ii in range(n0, n0+len(df_infobox)):
@@ -69,7 +70,8 @@ for jj in range(0, 20):
             data['retrieveCountry'][ii] = retrieve_country(
                     df_infobox['company'][ii])
 
-    data.to_csv('myData'+str(n1)+'.csv', sep=',', header=True, index=False)
+    data.to_csv('myData'+'Celine_'+str(n1)+'.csv', sep=',', header=True,
+                index=False)
 
     temps = time.time() - beggin
     print(data['retrieveCountry'].notnull().sum())
@@ -77,22 +79,3 @@ for jj in range(0, 20):
     print(temps)
     n0 = n1
     n1 += 1000
-
-
-#17000 : 507 country et 444 Industry
-#20000 : 595 country et 520 Industry
-#20500 : 611 country & 535 Industry
-#21000 : 623 country & 547 Indutry
-#26000 : 719 country & 628 Industry
-#28000 : 753 country & 648 Industry
-#38000 : 826 country & 705 Industry
-#48000 : 880 Country & 742 Industry
-#52000 : 901 countru &756 Industry
-#71000 : 985 Country & 818 Industry
-#73000 : 994 Country & 823 Industry
-
-
-###Objectif Vendredi : 
-    #REMPLIR LA BASE DE DONNEE
-    #AVANCER LE RAPPORT
-    #FINIR ET METTRE LE CODE SUR GITHUB

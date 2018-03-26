@@ -70,3 +70,46 @@ AND attacker.id_city = city.id_city
 AND city.id_country = country.id_country
 AND country.lib_country = 'france'
 GROUP BY lib_country;
+
+/* ZoneH */
+SELECT TOP(10) COUNT(id_attack) AS Nb_attack, lib_organisation
+FROM attack, organisation
+WHERE attack.id_organisation = organisation.id_organisation
+GROUP BY lib_organisation
+ORDER BY COUNT(id_attack) DESC;
+
+SELECT TOP(10) COUNT(id_attack) AS Nb_attack, lib_organisation
+FROM attack, organisation
+WHERE attack.id_organisation = organisation.id_organisation
+AND  organisation.famous = 1
+GROUP BY lib_organisation
+ORDER BY COUNT(id_attack) DESC;
+
+SELECT TOP(10) COUNT(id_attack) AS Nb_attack, lib_type_organisation
+FROM attack, organisation, type_organisation
+WHERE attack.id_organisation = organisation.id_organisation
+AND organisation.id_type_organisation = type_organisation.id_type_organisation
+GROUP BY lib_type_organisation
+ORDER BY COUNT(id_attack) DESC;
+
+SELECT TOP(10) COUNT(id_attack) AS Nb_attack, lib_type_server
+FROM attack, organisation, type_server
+WHERE attack.id_organisation = organisation.id_organisation
+AND organisation.id_type_server = type_server.id_type_server
+GROUP BY lib_type_server
+ORDER BY COUNT(id_attack) DESC;
+
+SELECT TOP(10) COUNT(id_attack) AS Nb_attack, lib_OS_property
+FROM attack, organisation, OS_property
+WHERE attack.id_organisation = organisation.id_organisation
+AND organisation.id_OS_property = OS_property.id_OS_property
+GROUP BY lib_OS_property
+ORDER BY COUNT(id_attack) DESC;
+
+
+SELECT x.month_date as mois, AVG(x.nb_attack) as nb_attack
+FROM (SELECT YEAR(attack.date_attack) AS year_date, MONTH(date_attack) AS month_date, count(id_attack) AS nb_attack
+		FROM attack 
+		WHERE id_city is null
+		GROUP BY YEAR(date_attack), MONTH(date_attack)) x
+GROUP BY x.month_date;

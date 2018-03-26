@@ -58,10 +58,15 @@ BEGIN
 END
 GO
 
-exec InsertDataFromZoneH  @attacker = 'lolo-bucheron',	@date = '2018-05-11 08:48:10', @lib_organisation = 'Oracle', @lib_type_server = 'Apache', @country = 'France', @lib_OS_property = 'Linux', @type_organisation = 'Information'
+exec InsertDataFromZoneH  @attacker = null,	@date = '2017-05-11 08:48:10', @lib_organisation = 'Oracle', @lib_type_server = 'Apache', @country = 'France', @lib_OS_property = 'Linux', @type_organisation = 'Information'
 GO
 
 select * from attack where id_city is null;
+
+select * from attack, attacker 
+where attack.id_city is null
+AND attack.id_attacker = attacker.id_attacker;
+
 
 select * from attacker where lib_attacker='team codezero';
 

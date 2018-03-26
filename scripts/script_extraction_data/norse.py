@@ -17,7 +17,6 @@ def call_api(api_url, to_parse_url):
             to_parse_url: url du site web norse
         Sorties:
             data: html contenant les données des cyberattaques
-        ##Objectif
     """
     data = r.post(url=api_url, json={"url": to_parse_url, "wait": 10,
                                      "expand": 1, "timeout": 90.0})
@@ -33,7 +32,7 @@ def extract_data(data):
             data: html
         Sorties:
             data: html filtré
-        ##Objectif filtrer le html, sélectionner les cyberattaques et retirer la mise en forme
+        Filtre le html, sélectionne les cyberattaques et retire la mise en forme
     """
     data = np.array(data)
     pattern = '<td style="width: 14%;">Attack Type</td>'
@@ -48,7 +47,7 @@ def delete_html(x):
             x: html
         Sorties:
             x: html mis en forme
-        ##Objectif mise en forme du html
+        Mise en forme du html
     """
     return x.text.split('\n')[2:][:-2]
 
@@ -59,7 +58,6 @@ def return_dic(data):
             data: objet pandas dataframe
         Sorties:
             records: dictionnaire orienté clé - valeur contenant les données
-        ##Objectif
     """
     df = pd.DataFrame(np.array(data).reshape(len(data), 5),
                       columns=['attacker', 'ip', 'attacker_country',
@@ -77,9 +75,8 @@ def write_json(data, cwd):
         Entrée:
             data: dictionnaire orienté clé valeur
             cwd: current working directory
-        Sorties: procédures qui écrit json
-            
-        ##Objectif
+        procédures qui écrit json
+
     """
     # You must create a repertory norse_json
     with open('{}/norse_json/{}.json'.format(cwd, uuid.uuid4()), 'w') as outfile:

@@ -5,7 +5,6 @@ Created on Fri Mar 23 09:19:54 2018
 @author: Loann
 """
 
-import requests
 import pyodbc
 import pandas as pd
 

@@ -64,6 +64,11 @@ GO
 select count(id_attack) from attack where id_city is null;
 
 DELETE FROM attack WHERE id_city is null;
+GO
+
+SELECT count(*) from organisation
+DELETE FROM organisation
+GO
 
 select * from attack, attacker 
 where attack.id_city is null

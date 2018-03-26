@@ -106,7 +106,6 @@ AND organisation.id_OS_property = OS_property.id_OS_property
 GROUP BY lib_OS_property
 ORDER BY COUNT(id_attack) DESC;
 
-
 SELECT x.month_date as mois, AVG(x.nb_attack) as nb_attack
 FROM (SELECT YEAR(attack.date_attack) AS year_date, MONTH(date_attack) AS month_date, count(id_attack) AS nb_attack
 		FROM attack 
@@ -120,3 +119,9 @@ WHERE attack.id_organisation = organisation.id_organisation
 AND organisation.id_country = country.id_country
 GROUP BY lib_country
 ORDER BY COUNT(id_attack) DESC;
+
+SELECT lib_OS_property
+FROM OS_property, organisation, country
+WHERE lib_country = 'united states'
+AND country.id_country = organisation.id_organisation
+AND organisation.id_OS_property = OS_property.id_OS_property

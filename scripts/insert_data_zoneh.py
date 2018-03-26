@@ -37,7 +37,7 @@ def procedure_insert(row):
     retrieveIndustry = is_null(row['retrieveIndustry'])
 
     
-    sql = 'exec InsertDataFromZoneH  @attacker =' +  notify + ' \
+    sql = 'exec InsertDataFromZoneH  @attacker =' +  notify + ', \
     @date = \'' + row['Date']  + '\', \
     @lib_organisation =' + company + ', \
     @lib_type_server =' + web_server + ', \
@@ -141,7 +141,7 @@ if __name__ == '__main__':
     
     # cwd = os.getcwd()
     # list_file = glob.glob("./../data/*0.csv".format(cwd))
-    list_file = ['./../data/DataClean_Zoneh.csv']
+    list_file = ['./../data/DataColumnsClean.csv']
 
     for file in list_file : 
         file_name = file.split('/')[-1].split('.csv')[0]

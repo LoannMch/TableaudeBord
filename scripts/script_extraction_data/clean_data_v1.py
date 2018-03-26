@@ -3,6 +3,11 @@
 Created on Fri Mar 16 10:47:07 2018
 
 @author: Celine
+V0 : create function retrieve_List, retrieve_dictCity, replace_line_break,
+                     sent2clean, retrieve_country_only, turn_into_country,
+                     states_us, standardize_us, clean_country, clean_industry
+V1 : create function clean_column
+
 """
 import pandas as pd
 import re
@@ -43,7 +48,7 @@ def replace_line_break(text):
     return(text)
 
 
-def sent2clean(sent):
+def sent_clean(sent):
     sent = sent.lower()
     sentClean = ''
     ii = 0
@@ -111,7 +116,7 @@ def clean_country(country, listCountriesLow, listStates, dictCities):
     country = str(country).lower()
     country = replace_line_break(country)
     country = retrieve_country_only(country, listCountriesLow)
-    country = sent2clean(country)
+    country = sent_clean(country)
     country = standardize_us(country)
     country = turn_into_country(country, listStates, dictCities)
     if country not in listCountriesLow:

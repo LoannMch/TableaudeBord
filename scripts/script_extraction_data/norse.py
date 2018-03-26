@@ -13,10 +13,10 @@ import uuid
 def call_api(api_url, to_parse_url):
     """
         Entrée:
-            api_url:
-            to_parse_url:
+            api_url: url de l'api
+            to_parse_url: url du site web norse
         Sorties:
-            data:
+            data: html contenant les données des cyberattaques
         ##Objectif
     """
     data = r.post(url=api_url, json={"url": to_parse_url, "wait": 10,
@@ -30,10 +30,10 @@ def call_api(api_url, to_parse_url):
 def extract_data(data):
     """
         Entrée:
-            data:
+            data: html
         Sorties:
-            data:
-        ##Objectif
+            data: html filtré
+        ##Objectif filtrer le html, sélectionner les cyberattaques et retirer la mise en forme
     """
     data = np.array(data)
     pattern = '<td style="width: 14%;">Attack Type</td>'
@@ -45,10 +45,10 @@ def extract_data(data):
 def delete_html(x):
     """
         Entrée:
-            x:
+            x: html
         Sorties:
-            x:
-        ##Objectif
+            x: html mis en forme
+        ##Objectif mise en forme du html
     """
     return x.text.split('\n')[2:][:-2]
 
@@ -56,9 +56,9 @@ def delete_html(x):
 def return_dic(data):
     """
         Entrée:
-            data:
+            data: objet pandas dataframe 
         Sorties:
-            records:
+            records: dictionnaire orienté clé - valeur contenant les données
         ##Objectif
     """
     df = pd.DataFrame(np.array(data).reshape(len(data), 5),
@@ -75,9 +75,9 @@ def return_dic(data):
 def write_json(data, cwd):
     """
         Entrée:
-            data:
-            cwd:
-        Sorties:
+            data: dictionnaire orienté clé valeur 
+            cwd: current working directory 
+        Sorties: procédures qui écrit json 
             
         ##Objectif
     """

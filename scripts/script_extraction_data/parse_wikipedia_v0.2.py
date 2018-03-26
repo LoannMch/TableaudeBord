@@ -4,7 +4,9 @@ Created on Wed Jan 31 15:17:11 2018
 
 @author: Céline
 
-V0.1 : Cutting in function
+V0.1 : Découpage en fonction
+V0.2 : Creation d'un fichier csv toutes les 1000 lignes traités
+        afin de minimiser les pertes si le programme est interrompu
 
 """
 import requests
@@ -12,21 +14,28 @@ import bs4
 import re
 import numpy as np
 import pandas as pd
-import time
 
 data = pd.read_csv('FinalSource_Real Cases.csv', sep=',',
                    error_bad_lines=False, encoding='ISO-8859-1')
 
 
 def retrieve_infobox_wiki(company):
-    missing_page = 'Wikipedia does not have an article with this exact name.'
+    """
+        Entrée:
+            company: string
+        Sorties:
+            infobox: balise html
+        Récupération de l'infobox de la page Wikipédia de la company
+        quand elle existe
+    """
+    MISSING_PAGE = 'Wikipedia does not have an article with this exact name.'
     req = requests.get('https://en.wikipedia.org/wiki/' + str(company))
     soup = bs4.BeautifulSoup(req.text, "lxml")
     ii = 0
     tag_b = soup.find_all('b')
     page_ok = True
     while ii < len(soup.find_all('b')) and page_ok:
-        if tag_b[ii].get_text() == missing_page:
+        if tag_b[ii].get_text() == MISSING_PAGE:
             page_ok = False
         else:
             ii += 1
@@ -36,6 +45,14 @@ def retrieve_infobox_wiki(company):
 
 
 def retrieve_country(infobox):
+    """
+        Entrée:
+            infobox: balise html
+        Sorties:
+            country: string / np.nan
+        Recupère une location à partir de l'infobox de la page wikipedia
+        associée à l'organisation sinon renvoie un np.nan
+    """
     country = np.nan
     if infobox:
         for tag_th in infobox.find_all('th', attrs={"scope": "row"}):
@@ -48,6 +65,14 @@ def retrieve_country(infobox):
 
 
 def retrieve_industry(infobox):
+    """
+        Entrée:
+            infobox: balise html
+        Sorties:
+            industry: string / np.nan
+        Recupère le type d'organisation à partir de l'infobox de la page
+        wikipedia associée à l'organisation sinon renvoie un np.nan
+    """
     type_Industry = np.nan
     if infobox:
         tab = infobox.get_text().split()
@@ -55,8 +80,6 @@ def retrieve_industry(infobox):
             type_Industry = tab[tab.index('Industry')+1]
     return(type_Industry)
 
-
-beggin = time.time()
 
 n0 = 0
 n1 = 1000
@@ -70,12 +93,8 @@ for jj in range(0, 213000):
             data['retrieveCountry'][ii] = retrieve_country(
                     df_infobox['company'][ii])
 
-    data.to_csv('myData'+'Celine_'+str(n1)+'.csv', sep=',', header=True,
+    data.to_csv('myData'+str(n1)+'.csv', sep=',', header=True,
                 index=False)
 
-    temps = time.time() - beggin
-    print(data['retrieveCountry'].notnull().sum())
-    print(data['retrieveIndustry'].notnull().sum())
-    print(temps)
     n0 = n1
     n1 += 1000

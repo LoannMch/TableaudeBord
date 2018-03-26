@@ -21,17 +21,32 @@ data = pd.read_csv('DataCountryClean.csv', sep=',',
 df_simpleWiki = pd.DataFrame.from_csv('simplewiki.csv', encoding='utf-8')
 
 
-def retrieve_List(nameList):
-    laList = list()
-    if not (df_simpleWiki['text'][df_simpleWiki['title'] == nameList].empty):
-        text = df_simpleWiki['text'][df_simpleWiki['title'] == nameList].item()
-        for val in re.finditer('\[\[[A-Z](\w| )+\]\]', text):
-            if val.group(0)[2:-2] not in laList:
-                laList.append(val.group(0)[2:-2])
-    return(laList)
+def retrieve_List(name_list):
+    """
+    Entrée:
+        name_list: String
+    Sortie:
+        the_List: List
+    Récupération d'une liste à partir de la simpleWiki
+    """
+    the_list = list()
+    if not (df_simpleWiki['text'][df_simpleWiki['title'] == name_list].empty):
+        txt = df_simpleWiki['text'][df_simpleWiki['title'] == name_list].item()
+        for val in re.finditer('\[\[[A-Z](\w| )+\]\]', txt):
+            if val.group(0)[2:-2] not in the_list:
+                the_list.append(val.group(0)[2:-2])
+    return(the_list)
 
 
 def retrieve_dictCity(countries):
+    """
+    Entrée:
+        country: String
+    Sortie:
+        dictCity: dictionnaire
+    Création d'un dictionnaire contenant la liste des villes les plus connus
+    par pays
+    """
     dictCity = {}
     for countrie in countries:
         listCity = retrieve_List('List of cities in ' + countrie)
@@ -43,34 +58,56 @@ def retrieve_dictCity(countries):
 
 
 def replace_line_break(text):
+    """
+    Entrée:
+        text: string
+    Sortie:
+        text: string
+    Enlève les sauts de ligne de la chaine de caractère
+    """
     if re.search('\n', text):
         text = ' '.join(text.split('\n'))
     return(text)
 
 
-def sent_clean(sent):
-    sent = sent.lower()
-    sentClean = ''
+def sent_clean(text):
+    """
+    Entrée:
+        text: string
+    Sortie:
+        text_clean: string
+    Enlève les characters innatendues
+    + les city en fin de chaine de character
+    """
+    text = text.lower()
+    text_clean = ''
     ii = 0
     ok = True
-    while ii < len(sent) and ok:
-        if (sent[ii].isalpha() is True or sent[ii] == '-' or sent[ii] == ' ' or
-                sent[ii] == '.'):
-            sentClean += sent[ii]
+    while ii < len(text) and ok:
+        if (text[ii].isalpha() is True or text[ii] == '-' or text[ii] == ' ' or
+                text[ii] == '.'):
+            text_clean += text[ii]
         else:
             ok = False
         ii += 1
-    if len(sentClean) != 0:
-        if sentClean[-1] == ' ':
-            sentClean = sentClean[0:len(sentClean)-1]
-    words = sentClean.split(" ")
+    if len(text_clean) != 0:
+        if text_clean[-1] == ' ':
+            text_clean = text_clean[0:len(text_clean)-1]
+    words = text_clean.split(" ")
     n = len(words)
     if words[n-1] == 'city':
-        sentClean = ' '.join(words[0:n-1])
-    return(sentClean)
+        text_clean = ' '.join(words[0:n-1])
+    return(text_clean)
 
 
 def retrieve_country_only(text, countries):
+    """
+    Entrée:
+        text: string, countries: list
+    Sortie:
+        text_clean: string
+    Renvoie le pays s'il est en debut ou en fin de chaine de caractère
+    """
     world = text.split(" ")
     n = len(world)
     test1 = world[n-1]
@@ -86,6 +123,13 @@ def retrieve_country_only(text, countries):
 
 
 def standardize_us(countrie):
+    """
+    Entrée:
+        countrie: string
+    Sortie:
+        countrie: string
+    Harmonise united states
+    """
     listUs = ['u.s.a', 'u.s.', 'u.s', 'us', 'u.s.a.']
     if countrie in listUs:
         countrie = 'united states'
@@ -93,6 +137,12 @@ def standardize_us(countrie):
 
 
 def states_us():
+    """
+    Entrée:
+    Sortie:
+        list_states: list
+    Recupère la liste des états des états unis
+    """
     req = requests.get('https://simple.wikipedia.org/wiki/List_of_U.S._states')
     soup = bs4.BeautifulSoup(req.text, "lxml")
     tag_states = soup.find_all('area', attrs={'shape': 'poly'})
@@ -103,6 +153,13 @@ def states_us():
 
 
 def turn_into_country(text, states, cities):
+    """
+    Entrée:
+        text: string + states: list + cities: dict
+    Sortie:
+        text: string
+    Convertie une ville ou un état en pays
+    """
     if text in states:
         return('united states')
     else:
@@ -113,6 +170,15 @@ def turn_into_country(text, states, cities):
 
 
 def clean_country(country, listCountriesLow, listStates, dictCities):
+    """
+    Entrée:
+        country: string + listCountriesLow :list
+        listStates: list + dictCities: dict
+    Sorties:
+        country: string / np.nan
+    Nettoie la localisation récupérée sur wikipedia et la convertie en pays
+    quand c'est possible sinon renvoie np.nan
+    """
     country = str(country).lower()
     country = replace_line_break(country)
     country = retrieve_country_only(country, listCountriesLow)
@@ -125,6 +191,14 @@ def clean_country(country, listCountriesLow, listStates, dictCities):
 
 
 def clean_industry(industry):
+    """
+    Entrée:
+        industry: string
+    Sorties:
+        industry: string / np.nan
+    Netoie le type d'industrie récupérée sur wikipedia
+    si on a rien recupérée on attribue la valeur nan
+    """
     industry = str(industry).lower()
     if len(industry) > 0:
         while not industry[-1].isalpha():
@@ -138,6 +212,14 @@ def clean_industry(industry):
 
 
 def clean_column(text):
+    """
+        Entrée:
+            text: string
+        Sorties:
+            text: string
+        Supprime les caractères qui ne sont pas alphanumerique
+        en fin et en debut de chaine de caractère
+    """
     text = str(text).lower()
     if len(text) > 0:
         while not(text[-1].isalpha() or text[-1].isnumeric()):

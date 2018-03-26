@@ -10,7 +10,7 @@ import bs4
 import requests
 import numpy as np
 
-data = pd.read_csv('myDataCeline_213000.csv', sep=',',
+data = pd.read_csv('DataCountryClean.csv', sep=',',
                    error_bad_lines=False, encoding='ISO-8859-1')
 
 df_simpleWiki = pd.DataFrame.from_csv('simplewiki.csv', encoding='utf-8')
@@ -123,20 +123,45 @@ def clean_industry(industry):
     industry = str(industry).lower()
     if len(industry) > 0:
         while not industry[-1].isalpha():
-            industry = industry[0:len(industry)-1]
+            if len(industry)-1 > 0:
+                industry = industry[0:len(industry)-1]
+            else:
+                industry = 'nan'
     if industry == 'nan':
         industry = np.nan
     return(industry)
 
+
+def clean_column(text):
+    text = str(text).lower()
+    if len(text) > 0:
+        while not(text[-1].isalpha() or text[-1].isnumeric()):
+            if len(text)-1 > 0:
+                text = text[0:len(text)-1]
+            else:
+                return('')
+        while not(text[0].isalpha() or text[0].isnumeric()):
+            if len(text)-1 > 0:
+                text = text[1:len(text)]
+            else:
+                return('')
+    return(text)
 
 listCountries = sorted(retrieve_List('List of countries'))
 listCountriesLow = [countrie.lower() for countrie in listCountries]
 listStates = states_us()
 dictCities = retrieve_dictCity(listCountries)
 
-data['retrieveCountry'] = data['retrieveCountry'].apply(clean_country,
+
+data['Country'] = data['Country'].apply(clean_country,
                             args=(listCountriesLow, listStates, dictCities))
 
 data['retrieveIndustry'] = data['retrieveIndustry'].apply(clean_industry)
 
-data.to_csv('DataClean.csv', sep=',', header=True, index=False)
+listColumns = list(data.columns.values)
+
+for column in listColumns:
+    data[column] = data[column].apply(clean_column)
+
+
+data.to_csv('DataColumnsClean.csv', sep=',', header=True, index=False)

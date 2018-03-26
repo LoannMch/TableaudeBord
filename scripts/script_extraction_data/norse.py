@@ -56,7 +56,7 @@ def delete_html(x):
 def return_dic(data):
     """
         Entrée:
-            data: objet pandas dataframe 
+            data: objet pandas dataframe
         Sorties:
             records: dictionnaire orienté clé - valeur contenant les données
         ##Objectif
@@ -75,9 +75,9 @@ def return_dic(data):
 def write_json(data, cwd):
     """
         Entrée:
-            data: dictionnaire orienté clé valeur 
-            cwd: current working directory 
-        Sorties: procédures qui écrit json 
+            data: dictionnaire orienté clé valeur
+            cwd: current working directory
+        Sorties: procédures qui écrit json
             
         ##Objectif
     """

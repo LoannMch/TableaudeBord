@@ -113,3 +113,10 @@ FROM (SELECT YEAR(attack.date_attack) AS year_date, MONTH(date_attack) AS month_
 		WHERE id_city is null
 		GROUP BY YEAR(date_attack), MONTH(date_attack)) x
 GROUP BY x.month_date;
+
+SELECT lib_country, COUNT(id_attack) AS Nb_attack
+FROM attack, organisation, country
+WHERE attack.id_organisation = organisation.id_organisation
+AND organisation.id_country = country.id_country
+GROUP BY lib_country
+ORDER BY COUNT(id_attack) DESC;

@@ -28,21 +28,12 @@ def export_query_to_csv(sql, columns, name_csv):
     df.to_csv('CSV_for_analyse/' + name_csv)
 
 
-sql = 'SELECT c.lib_country, \
-(SELECT count(id_attack) as Nb_attack_subie \
-FROM attack, city ,country \
-WHERE attack.id_city = city.id_city \
-AND city.id_country = country.id_country \
-AND country.lib_country = c.lib_country \
-GROUP BY lib_country) as Nb_attack_subie, \
-(SELECT count(id_attack) as Nb_attack_emmise \
-FROM attack, city ,country, attacker \
-WHERE attack.id_attacker = attacker.id_attacker \
-AND attacker.id_city = city.id_city \
-AND city.id_country = country.id_country \
-AND country.lib_country = c.lib_country \
-GROUP BY lib_country) as Nb_attack_emmise \
-FROM country c'
+sql = 'SELECT lib_country, COUNT(id_attack) AS Nb_attack \
+FROM attack, organisation, country \
+WHERE attack.id_organisation = organisation.id_organisation \
+AND organisation.id_country = country.id_country \
+GROUP BY lib_country \
+ORDER BY COUNT(id_attack) DESC;'
 
-columns = ['Pays', 'Nb_attack_subie', 'Nb_attack_emmise']  
-export_query_to_csv(sql, columns, 'NbrAttack_subie_emmise.csv')
+columns = ['Pays', 'Nb_attack']  
+export_query_to_csv(sql, columns, 'NbrAttack_Pays_ZoneH.csv')

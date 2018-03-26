@@ -7,6 +7,7 @@ import pyodbc
 
 
 def procedure_insert(row):
+	# row is a dictionnary which have key and value 
     sql = 'exec InsertDataFromNorse @type_attack=\''+row['attack_type']+'\',@target_country=\''+row['target_country']+'\',@target_town=\''+row['target_town']+'\',@attacker_town=\''+row['attacker_town']+'\',@attacker_country=\''+row['attacker_country']+'\',@attacker=\''+row['attacker']+'\',@date=\''+row['date']+'\''
     cursor = con.cursor()
     cursor.execute(sql)
@@ -14,10 +15,16 @@ def procedure_insert(row):
 
 
 def update_date(x):
+	# x is a pandas datetime object
+	# this fonction allow to return string at the well date format
     return('{:02d}-{:02d}-{} {:02d}:{:02d}:{:02d}'.format(x.day, x.month, x.year, x.hour, x.minute, x.second))
 
 
 def call_procedure(con, data, file_name, mapping_country):
+	# con : object which allow connection to the database
+	# data : dataframe which contains data 
+	# file_name : file of the dataframe data 
+	# mapping_country : dictionnary which allow to convert code of the country as label
     data = pd.DataFrame.from_dict(data)
     data['date'] = pd.to_datetime(data['date'])
     data['date'] = data['date'].apply(lambda x : update_date(x))
@@ -96,12 +103,15 @@ if __name__ == '__main__':
     cwd = os.getcwd()
     list_file = glob.glob("{}/norse_json/*.json".format(cwd))
 
+    # For each json file of the selected directory :
     for file in list_file : 
 
         file_name = file.split('/')[-1].split('.json')[0]
 
+        # Reading the csv file in json_data
         with open(file) as json_data:
 
+        	# Convert json_data as pandas dataframe
             data = json.load(json_data)
             call_procedure(con, data, file_name, mapping_country)
             	

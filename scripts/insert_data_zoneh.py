@@ -30,7 +30,11 @@ def call_procedure(con, data, file_name):
             lambda x: x == x)
     data['Famous'] = data['retrieveIndustry'].apply(
             lambda x: 1 if(x == x) else 0)
-    data.apply(procedure_insert, axis='columns')
+    for index, row in data.iterrows():
+        try:
+            procedure_insert(row)
+        except:
+            print('error {}'.format(index))
 
 
 def update_date(x):

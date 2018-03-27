@@ -28,12 +28,13 @@ def export_query_to_csv(sql, columns, name_csv):
     df.to_csv('CSV_for_analyse/' + name_csv)
 
 
-sql = 'SELECT lib_country, COUNT(id_attack) AS Nb_attack \
-FROM attack, organisation, country \
+sql = 'SELECT lib_type_server, COUNT(id_attack) AS Nb_attack \
+FROM attack, organisation, type_server \
 WHERE attack.id_organisation = organisation.id_organisation \
-AND organisation.id_country = country.id_country \
-GROUP BY lib_country \
+AND organisation.id_type_server = type_server.id_type_server \
+GROUP BY lib_type_server \
 ORDER BY COUNT(id_attack) DESC;'
 
-columns = ['Pays', 'Nb_attack']
-export_query_to_csv(sql, columns, 'NbrAttack_Pays_ZoneH.csv')
+columns = ['lib_type_server', 'Nb_attack']
+export_query_to_csv(sql, columns, 'NbrAttack_TypeServer.csv')
+

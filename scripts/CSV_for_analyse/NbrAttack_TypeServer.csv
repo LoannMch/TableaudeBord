@@ -1,0 +1,149 @@
+,lib_type_server,Nb_attack
+0,Apache,104447
+1,IIS/6.0,19454
+2,nginx,3595
+3,IIS 5.0,3072
+4,litespeed,2581
+5,IIS/5.0,1925
+6,iis/7.0,1222
+7,iis/7.5,836
+8,IIS 4.0,404
+9,iis/8.0,355
+10,cloudflare-nginx,94
+11,Zeus,66
+12,noyb,55
+13,microsoftofficeweb5.0_pub,47
+14,IIS/4.0,46
+15,IIS/5.1,38
+16,lighttpd,34
+17,oversee turing v1.0.0,31
+18,Rapidsite,27
+19,GWS,24
+20,IdeaWebServer,19
+21,sun-java-system-web-server/7.0,16
+22,web acceleration by http://www.unixy.net/varnish,15
+23,yts,15
+24,ideawebserver/v0.80,15
+25,iis/8.5,14
+26,lighttpd/1.4.32,13
+27,ats/4.0.1,13
+28,IIS 6.0,12
+29,IIS 5.1,10
+30,iis,10
+31,yts/1.20.28,9
+32,ngx_openresty,9
+33,SonataSer,8
+34,unix 5/6,8
+35,apachebooster by http://www.prajith.in,8
+36,thttpd,7
+37,modsecurity by devonil.com,7
+38,zeus/4.3,6
+39,ghs,6
+40,dimofinf hosting,6
+41,dinahttpd server,5
+42,av,5
+43,hosting,4
+44,"NOYB""",4
+45,pns box http proxy service,3
+46,sputnik2.aus,3
+47,sun glassfish enterprise server v2.1.1,3
+48,sunone webserver,3
+49,Unknown,3
+50,hp-chaiserver,3
+51,IdeaWebSe,3
+52,microsoft-iis/9.0,3
+53,jino.ru/mod_pizza,3
+54,lighttpd/1.4.28,3
+55,ats,3
+56,gse,3
+57,ConcentricHost-Ashurbanipal,2
+58,216.74.154.150,2
+59,basehttp/0.3 python/2.6.6,2
+60,lighttpd/1.4.29,2
+61,akamaighost,2
+62,perl dancer 1.3071,2
+63,silverstream server,2
+64,webserver,2
+65,tomahawk ultra,2
+66,traidnt-security,2
+67,Zope,2
+68,yts/1.19.11,2
+69,wisepanel web server,2
+70,wp engine/4.0,2
+71,secured by fs4host.com,2
+72,Red Hat Secure,2
+73,mod_security 2.5.9 enabled,2
+74,Netscape-Enterprise,2
+75,myel,1
+76,mythril server 4.0 extention,1
+77,minigun,1
+78,mircrosoftofficeweb50_pub,1
+79,power mod by oho,1
+80,power mod by web4host.net,1
+81,powered by totalin webhosting solutions www.totali,1
+82,pws/8.0.16,1
+83,rackcorpcdn/2.1,1
+84,oracle as,1
+85,oracle-application-server-10g/10.1.2.0.0 oracle-ht,1
+86,redhatvn config by info@redhatvn.net,1
+87,resin,1
+88,Roxen Challenger,1
+89,s8.aus,1
+90,safe3 web firewall,1
+91,SAMBAR,1
+92,sec/3jenan.com,1
+93,secured by hloun.com,1
+94,sffe,1
+95,pcx/no-cache,1
+96,sputnik3.aus,1
+97,sputnik4.aus,1
+98,sputnik6.aus,1
+99,squid,1
+100,squid/2.5.stable1,1
+101,wukong/0.0.1,1
+102,x-135.6,1
+103,x-artvisual-serverlinux15.artvisual.net,1
+104,x-krypton,1
+105,yts/1.19.8,1
+106,WEB602,1
+107,webdevel,1
+108,ud webspace 3.0,1
+109,sun-one-web-server/6.1,1
+110,tarana host,1
+111,tbgf4/1.2.9,1
+112,thor - iixplanet server,1
+113,webserverx,1
+114,WebSite,1
+115,what-chu-talkin&#039;-bout-willis?/arnold drummond,1
+116,virata-em,1
+117,httpd,1
+118,hostvn.net 1.0 - reef,1
+119,IIS 3.0,1
+120,lighttpd/1.4.23,1
+121,lasso,1
+122,microsoft-iis/9.0 mod_ruid2/0.9,1
+123,litespeed/4.1.12 enterprise,1
+124,litespeed/4.1.13 enterprise,1
+125,masterws,1
+126,mbog,1
+127,microsoft-iis/5.0 mod_ruid2/0.9,1
+128,microsoft-iis/6.6beta,1
+129,beast,1
+130,bigip,1
+131,by drsrv.com,1
+132,chamber88 nginx/1.4.1,1
+133,cherrypy/2.3.0,1
+134,advanced hosting by http://www.unixy.net/varnish,1
+135,ats/3.2.5,1
+136,ArtBlast,1
+137,aserver/1.2.9-3,1
+138,depdiknas webserver/1.0,1
+139,df-server/3.0,1
+140,CoffeeMaker,1
+141,host install nginx,1
+142,dungeon9,1
+143,ecpay,1
+144,exaserver,1
+145,freerice,1
+146,fs5,1
+147,generico web server v 5.46,1

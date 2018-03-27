@@ -69,6 +69,8 @@ AND id_organisation='175';
 
 /* DELETE FROM attack WHERE id_city is null;
 GO*/
+DELETE FROM attack WHERE id_city is null;
+GO
 
 SELECT count(*) from organisation
 DELETE FROM organisation
@@ -85,3 +87,14 @@ select *
 from attacker,attack 
 where attacker.id_attacker = attack.id_attack
 and lib_attacker='team codezero';
+
+select max(x.id_attack) from
+(
+	select top(212093) * from attack 
+	where id_city is null
+) x
+
+select top(212093) * from attack 
+where id_city is null
+ORDER BY id_city ASC;
+

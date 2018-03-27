@@ -97,13 +97,14 @@ ORDER BY COUNT(id_attack) DESC;
 /* 
 	Top 10 des types organisation attaqué (ZoneH)
 */
-SELECT TOP(10) COUNT(id_attack) AS Nb_attack, lib_type_organisation
+SELECT lib_type_organisation, COUNT(id_attack) AS Nb_attack
 FROM attack, organisation, type_organisation
 WHERE attack.id_organisation = organisation.id_organisation
 AND organisation.id_type_organisation = type_organisation.id_type_organisation
 GROUP BY lib_type_organisation
 ORDER BY COUNT(id_attack) DESC;
 
+select * from type_organisation
 /* 
 	Top 10 des types de server attaqué (ZoneH)
 */
@@ -117,7 +118,7 @@ ORDER BY COUNT(id_attack) DESC;
 /* 
 	Top 10 des OS attaqué (ZoneH)
 */
-SELECT TOP(10) COUNT(id_attack) AS Nb_attack, lib_OS_property
+SELECT TOP(10)lib_OS_property, COUNT(id_attack) AS Nb_attack 
 FROM attack, organisation, OS_property
 WHERE attack.id_organisation = organisation.id_organisation
 AND organisation.id_OS_property = OS_property.id_OS_property
@@ -160,3 +161,5 @@ FROM OS_property, organisation, country
 WHERE lib_country = 'united states'
 AND country.id_country = organisation.id_organisation
 AND organisation.id_OS_property = OS_property.id_OS_property
+
+select * from country;

@@ -67,7 +67,7 @@ select * from attack
 where id_city is null
 AND id_organisation='175';
 
-/*DELETE FROM attack WHERE id_city is null;
+/* DELETE FROM attack WHERE id_city is null;
 GO*/
 
 SELECT count(*) from organisation

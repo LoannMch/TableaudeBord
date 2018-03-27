@@ -52,6 +52,7 @@ def procedure_insert(row):
     country = is_null(row['retrieveCountry'])
     os = is_null(row['OS'])
     retrieveIndustry = is_null(row['retrieveIndustry'])
+    print(row.name)
     sql = 'exec InsertDataFromZoneH  @attacker ='+notify+', \
     @date = \''+row['Date']+'\', \
     @lib_organisation =' + company + ', \

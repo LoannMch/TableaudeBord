@@ -95,6 +95,25 @@ GROUP BY lib_organisation
 ORDER BY COUNT(id_attack) DESC;
 
 /* 
+	nombre d'attaque par organisation attaqué (ZoneH)
+*/
+SELECT lib_organisation, COUNT(id_attack) AS Nb_attack
+FROM attack, organisation
+WHERE attack.id_organisation = organisation.id_organisation
+GROUP BY lib_organisation
+ORDER BY COUNT(id_attack) DESC;
+
+/* 
+	nombre d'attaque par organisation "famous" attaqué (ZoneH)
+*/
+SELECT lib_organisation, COUNT(id_attack) AS Nb_attack
+FROM attack, organisation
+WHERE attack.id_organisation = organisation.id_organisation
+AND  organisation.famous = 1
+GROUP BY lib_organisation
+ORDER BY COUNT(id_attack) DESC;
+
+/* 
 	Top 10 des types organisation attaqué (ZoneH)
 */
 SELECT lib_type_organisation, COUNT(id_attack) AS Nb_attack
@@ -105,10 +124,11 @@ GROUP BY lib_type_organisation
 ORDER BY COUNT(id_attack) DESC;
 
 select * from type_organisation
+select * from organisation where id_type_organisation!=1
 /* 
-	Top 10 des types de server attaqué (ZoneH)
+	nombre d'attaque par types de server attaqué (ZoneH)
 */
-SELECT TOP(10) COUNT(id_attack) AS Nb_attack, lib_type_server
+SELECT COUNT(id_attack) AS Nb_attack, lib_type_server
 FROM attack, organisation, type_server
 WHERE attack.id_organisation = organisation.id_organisation
 AND organisation.id_type_server = type_server.id_type_server
@@ -118,13 +138,18 @@ ORDER BY COUNT(id_attack) DESC;
 /* 
 	Top 10 des OS attaqué (ZoneH)
 */
-SELECT TOP(10)lib_OS_property, COUNT(id_attack) AS Nb_attack 
+SELECT lib_OS_property, COUNT(id_attack) AS Nb_attack 
 FROM attack, organisation, OS_property
 WHERE attack.id_organisation = organisation.id_organisation
 AND organisation.id_OS_property = OS_property.id_OS_property
 GROUP BY lib_OS_property
 ORDER BY COUNT(id_attack) DESC;
 
+select * from OS_property;
+
+SELECT *
+FROM organisation
+WHERE id_OS_property!=1
 /* 
 	Moyenne d'attaque par mois (ZoneH)
 */
@@ -155,11 +180,22 @@ AND organisation.id_country = country.id_country
 GROUP BY lib_country
 ORDER BY COUNT(id_attack) DESC;
 
-/* REQUETE EN COURS */
-SELECT lib_OS_property
-FROM OS_property, organisation, country
-WHERE lib_country = 'united states'
-AND country.id_country = organisation.id_organisation
-AND organisation.id_OS_property = OS_property.id_OS_property
+/*
+	TOP 3 des groupes de hackers (Zone H)
+*/
+SELECT TOP(3) lib_attacker, count(id_attack)
+FROM attacker, attack
+WHERE attack.id_attacker = attacker.id_attacker
+AND attack.id_city is null
+GROUP BY lib_attacker
+ORDER BY count(id_attack) DESC;
 
-select * from country;
+/*
+	nombre d'attaque par groupes de hackers (Zone H)
+*/
+SELECT lib_attacker, count(id_attack)
+FROM attacker, attack
+WHERE attack.id_attacker = attacker.id_attacker
+AND attack.id_city is null
+GROUP BY lib_attacker
+ORDER BY count(id_attack) DESC;

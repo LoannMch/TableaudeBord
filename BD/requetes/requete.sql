@@ -136,6 +136,17 @@ GROUP BY lib_type_server
 ORDER BY COUNT(id_attack) DESC;
 
 /* 
+	nombre d'attaque par types de server attaqué 2010-2015 (ZoneH)
+*/
+SELECT COUNT(id_attack) AS Nb_attack, lib_type_server
+FROM attack, organisation, type_server
+WHERE attack.id_organisation = organisation.id_organisation
+AND organisation.id_type_server = type_server.id_type_server
+AND YEAR(date_attack) > 2009
+GROUP BY lib_type_server
+ORDER BY COUNT(id_attack) DESC;
+
+/* 
 	Top 10 des OS attaqué (ZoneH)
 */
 SELECT lib_OS_property, COUNT(id_attack) AS Nb_attack 
@@ -169,6 +180,24 @@ FROM attack
 WHERE id_city is null
 GROUP BY YEAR(date_attack)
 ORDER BY YEAR(date_attack);
+
+/* 
+	Evolution du nombre d'attaque cumulé par an (ZoneH)
+*/
+SELECT YEAR(a1.date_attack) AS year_date, count(a2.id_attack) AS nb_attack
+FROM attack a1, attack a2
+WHERE a1.id_city is null
+AND a2.id_city is null
+AND YEAR(a2.date_attack) < YEAR(a1.date_attack)
+GROUP BY YEAR(a1.date_attack)
+ORDER BY YEAR(a1.date_attack);
+
+SELECT YEAR(a1.date_attack), x.nb_attack
+FROM attack a1,
+(SELECT count(id_attack) AS nb_attack
+FROM attack
+WHERE YEAR(attack.date_attack) < 2002) x
+GROUP BY YEAR(a1.date_attack)
 
 /* 
 	Nombre d'attaque par pays (ZoneH)

@@ -28,14 +28,13 @@ def export_query_to_csv(sql, columns, name_csv):
     df.to_csv('CSV_for_analyse/' + name_csv)
 
 
-sql = 'SELECT x.month_date as mois, AVG(x.nb_attack) as nb_attack_moyen \
-FROM (SELECT YEAR(attack.date_attack) AS year_date, MONTH(date_attack) AS month_date, count(id_attack) AS nb_attack \
-		FROM attack \
-		WHERE id_city is null \
-		GROUP BY YEAR(date_attack), MONTH(date_attack)) x \
-GROUP BY x.month_date \
-ORDER BY x.month_date;'
+sql = 'SELECT lib_type_server, COUNT(id_attack) AS Nb_attack  \
+FROM attack, organisation, type_server \
+WHERE attack.id_organisation = organisation.id_organisation \
+AND organisation.id_type_server = type_server.id_type_server \
+AND YEAR(date_attack) > 2009 \
+GROUP BY lib_type_server \
+ORDER BY COUNT(id_attack) DESC;'
 
-columns = ['Month', 'Nb_attack_average']
-export_query_to_csv(sql, columns, 'NbAttack_MonthAverage.csv')
-
+columns = ['lib_type_server', 'Nb_attack']
+export_query_to_csv(sql, columns, 'NbAttack_TypeServer_2010-2015.csv')

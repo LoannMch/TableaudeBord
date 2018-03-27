@@ -1,0 +1,124 @@
+,lib_type_server,Nb_attack
+0,Apache,52876
+1,nginx,3416
+2,IIS/6.0,2640
+3,litespeed,2103
+4,iis/7.5,835
+5,iis/7.0,446
+6,iis/8.0,355
+7,cloudflare-nginx,94
+8,IIS/5.0,63
+9,microsoftofficeweb5.0_pub,47
+10,oversee turing v1.0.0,31
+11,IIS 5.0,23
+12,GWS,17
+13,ideawebserver/v0.80,15
+14,web acceleration by http://www.unixy.net/varnish,15
+15,iis/8.5,14
+16,lighttpd,14
+17,lighttpd/1.4.32,13
+18,ats/4.0.1,13
+19,iis,10
+20,IIS 4.0,10
+21,ngx_openresty,9
+22,yts/1.20.28,9
+23,unix 5/6,8
+24,apachebooster by http://www.prajith.in,8
+25,modsecurity by devonil.com,7
+26,zeus/4.3,6
+27,dimofinf hosting,6
+28,ghs,6
+29,hosting,4
+30,gse,3
+31,IIS/4.0,3
+32,ats,3
+33,pns box http proxy service,3
+34,jino.ru/mod_pizza,3
+35,lighttpd/1.4.28,3
+36,microsoft-iis/9.0,3
+37,Zeus,3
+38,sputnik2.aus,3
+39,sun glassfish enterprise server v2.1.1,3
+40,secured by fs4host.com,2
+41,tomahawk ultra,2
+42,traidnt-security,2
+43,webserver,2
+44,yts/1.19.11,2
+45,wisepanel web server,2
+46,wp engine/4.0,2
+47,perl dancer 1.3071,2
+48,lighttpd/1.4.29,2
+49,mod_security 2.5.9 enabled,2
+50,akamaighost,2
+51,basehttp/0.3 python/2.6.6,2
+52,IdeaWebServer,2
+53,IIS/5.1,2
+54,IIS 6.0,1
+55,host install nginx,1
+56,hostvn.net 1.0 - reef,1
+57,httpd,1
+58,IdeaWebSe,1
+59,beast,1
+60,bigip,1
+61,by drsrv.com,1
+62,chamber88 nginx/1.4.1,1
+63,cherrypy/2.3.0,1
+64,advanced hosting by http://www.unixy.net/varnish,1
+65,aserver/1.2.9-3,1
+66,ats/3.2.5,1
+67,depdiknas webserver/1.0,1
+68,df-server/3.0,1
+69,dungeon9,1
+70,ecpay,1
+71,exaserver,1
+72,freerice,1
+73,fs5,1
+74,generico web server v 5.46,1
+75,minigun,1
+76,mircrosoftofficeweb50_pub,1
+77,noyb,1
+78,oracle as,1
+79,oracle-application-server-10g/10.1.2.0.0 oracle-ht,1
+80,power mod by oho,1
+81,power mod by web4host.net,1
+82,powered by totalin webhosting solutions www.totali,1
+83,pws/8.0.16,1
+84,rackcorpcdn/2.1,1
+85,redhatvn config by info@redhatvn.net,1
+86,s8.aus,1
+87,safe3 web firewall,1
+88,sec/3jenan.com,1
+89,microsoft-iis/9.0 mod_ruid2/0.9,1
+90,litespeed/4.1.12 enterprise,1
+91,litespeed/4.1.13 enterprise,1
+92,masterws,1
+93,mbog,1
+94,microsoft-iis/5.0 mod_ruid2/0.9,1
+95,microsoft-iis/6.6beta,1
+96,lighttpd/1.4.23,1
+97,wukong/0.0.1,1
+98,x-135.6,1
+99,x-artvisual-serverlinux15.artvisual.net,1
+100,x-krypton,1
+101,yts,1
+102,virata-em,1
+103,webdevel,1
+104,yts/1.19.8,1
+105,webserverx,1
+106,what-chu-talkin&#039;-bout-willis?/arnold drummond,1
+107,Zope,1
+108,ud webspace 3.0,1
+109,secured by hloun.com,1
+110,sffe,1
+111,sun-java-system-web-server/7.0,1
+112,sun-one-web-server/6.1,1
+113,tarana host,1
+114,tbgf4/1.2.9,1
+115,thor - iixplanet server,1
+116,sputnik3.aus,1
+117,sputnik4.aus,1
+118,sputnik6.aus,1
+119,squid/2.5.stable1,1
+120,myel,1
+121,mythril server 4.0 extention,1
+122,pcx/no-cache,1

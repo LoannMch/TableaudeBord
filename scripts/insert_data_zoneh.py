@@ -11,6 +11,12 @@ import pyodbc
 
 
 def call_procedure(con, data, file_name):
+    """
+        Entrée:
+            con : object which allow connection to the database
+            data : dataframe which contains data
+            file_name : file of the dataframe data
+    """
     data['Date'] = pd.to_datetime(data['Date'])
     data['Date'] = data['Date'].apply(lambda x: update_date(x))
     data['Notify'] = data['Notify'].apply(lambda x: x.lower() if x == x else x)
@@ -28,6 +34,13 @@ def call_procedure(con, data, file_name):
 
 
 def update_date(x):
+    """
+        Entrée:
+            x is a pandas datetime object
+        Sorties:
+            string
+        this fonction allow to return string at the well date format
+    """
     return('{:02d}-{:02d}-{} {:02d}:{:02d}:{:02d}'.format(
             x.day, x.month, x.year, x.hour, x.minute, x.second))
 
@@ -60,6 +73,12 @@ def procedure_insert(row):
 
 
 def is_null(x):
+    """
+        Entrée:
+            x string
+        Sorties:
+            string
+    """
     if x == 'null':
         return x
     else:
@@ -67,6 +86,12 @@ def is_null(x):
 
 
 def referenced_country(x):
+    """
+        Entrée:
+            x string
+        Sorties:
+            string or np.nan
+    """
     if x in mapping_country:
         return x
     else:
